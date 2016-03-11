@@ -36,6 +36,9 @@ $(function () {
     });
 
     var defaults = {
+        title: {
+          text: null
+        },
         chart: {
             type: "line",
             animation: false
@@ -90,10 +93,6 @@ $(function () {
 
 
     $('#container-temp').highcharts($.extend({}, defaults, {
-
-        title: {
-            text: 'Temperature'
-        },
         yAxis: [{ 
             tickInterval: 2,
             title: {
@@ -108,7 +107,7 @@ $(function () {
             }
         }],
         series: [{
-            name: 'YOW',
+            name: 'Observed',
             color:'#C00',
             data: yowData,
             marker: {
@@ -139,9 +138,7 @@ $(function () {
 
     $('#container-wind').highcharts($.extend({}, defaults, {
 
-        title: {
-            text: 'Wind'
-        },
+      
         yAxis: [{ 
           title: {
               text: 'km/h'
@@ -155,7 +152,7 @@ $(function () {
             }
         }],
         series: [{
-            name: 'Wind Speed',
+            name: 'Observed Speed',
             color:'#00C',
             data: windSpeedData,
             yAxis: 0,
@@ -191,15 +188,25 @@ $(function () {
 });
 
 </script>
-<div class="row">
-  <div class="col-xs-12">
+<section class="chart">
+  <div class="container">
+  <div class="row">
+  <div class="col-xs-12 portfolio-item text-center">
+    <h2>Temperature</h2>
+    <hr class="star-primary" />
       <div id="container-temp"></div>
   </div>
+  </div>
 </div>
-
+</section>
+<section class="chart">
+   <div class="container">
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12 portfolio-item text-center">
+      <h2>Wind Speed</h2>
+      <hr class="star-primary" />
       <div id="container-wind"></div>
   </div>
 </div>
-
+</div>
+</section>
