@@ -304,16 +304,17 @@ footer .footer-below {
     background-color: #233140;
 }
 
-.btn-social {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    border: 2px solid #fff;
-    border-radius: 100%;
-    text-align: center;
+footer a:link, a:visited, a:hover{
+    color:#fff;
+    text-decoration: underline;
+    background-color: transparent;
     font-size: 20px;
-    line-height: 45px;
+    
+} 
+footer p, footer a{
+    line-height: 150%;
 }
+
 
 .btn:focus,
 .btn:active,
@@ -404,4 +405,8 @@ footer .footer-below {
 .portfolio-modal .modal-backdrop {
     display: none;
     opacity: 0;
+}
+
+.condition-value {
+    color:#FFF;
 }

@@ -25,7 +25,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body id="page-top" class="index">
-
  <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -42,16 +41,17 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
+        <% currenconditions = current_conditions %> 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <p class="navbar-text">Temp: 21°C</p>
+                    <p class="navbar-text">Temp: <span class="condition-value"><%= format('%d', currenconditions[0].round(0)) %>°C </span></p>
                 </li>
                 <li class="page-scroll">
-                    <p class="navbar-text">Wind: W @ 12 km/h </p>
+                    <p class="navbar-text">Wind: <span class="condition-value"><%= current_conditions[2]%> @ <%= current_conditions[1]%> km/h </span></p>
                 </li>
                 
             </ul>
@@ -79,5 +79,51 @@
         <%= yield %>
     </div><!-- /.container -->
 </section>
+
+
+<!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="footer-col col-xs-6 text-left">
+                        <h3>Other Forecasts</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="https://weather.gc.ca/forecast/hourly/on-118_metric_e.html">Environment Canada 24h Forecast</a>
+                            </li>
+                            <li>
+                                <a href="https://weather.gc.ca/city/pages/on-118_metric_e.html">Environment Canada 7d Forecast</a>
+                            </li>
+                            <li>
+                                <a href="https://weather.gc.ca/past_conditions/index_e.html?station=yow">Environment Canada past 24h</a>
+                            </li>
+                            <li>
+                                <a href="http://climate.weather.gc.ca/climateData/dailydata_e.html?StationID=49568">Almanac for Today</a>
+                            </li>
+                            <li>
+                                <a href="https://weather.gc.ca/almanac/almanac_e.html?id=6106000">Record Values for Today</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-xs-6">
+                        <h3>About YOWX</h3>
+                        <p>Ottawa weather conditions presented in a way that doesn't suck.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
