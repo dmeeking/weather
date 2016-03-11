@@ -13,17 +13,27 @@
 
 ActiveRecord::Schema.define(version: 20160310144056) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "local_weather_readings", force: :cascade do |t|
+    t.datetime "recorded_at"
+    t.decimal  "temperature"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "weather_readings", force: :cascade do |t|
     t.datetime "reading_at"
-    t.decimal  "temperature",                   precision: 10
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.string   "location",          limit: 255
-    t.integer  "wind_speed",        limit: 4
-    t.string   "wind_direction",    limit: 255
-    t.decimal  "pressure",                      precision: 10
-    t.decimal  "relative_humidity",             precision: 10
-    t.integer  "dew_point",         limit: 4
+    t.decimal  "temperature"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "location"
+    t.integer  "wind_speed"
+    t.string   "wind_direction"
+    t.decimal  "pressure"
+    t.decimal  "relative_humidity"
+    t.integer  "dew_point"
   end
 
   add_index "weather_readings", ["reading_at"], name: "index_weather_readings_on_reading_at", using: :btree
