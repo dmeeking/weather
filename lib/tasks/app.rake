@@ -17,18 +17,6 @@ namespace :app do
 
     # INSERT BELOW
 
-
-    time = Time.new
-
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 0, 1) , temperature: 2)
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 1, 1) , temperature: 3)
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 2, 1) , temperature: 4)
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 3, 1) , temperature: 8)
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 4, 1) , temperature: 3)
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 5, 1) , temperature: 1)
-    WeatherReading.create(reading_at: Time.local(time.year, time.month, time.day, 6, 1) , temperature: -5)
-
-
   #  [
   #    {:first_name => "Darth",     :last_name => "Vader"},
   #    {:first_name => "Commander", :last_name => "Praji"},

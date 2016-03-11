@@ -24,9 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'active_link_to'
-gem "chartkick"
 gem 'groupdate'
-gem 'mysql2'
 gem 'nokogiri'
 
 # Use ActiveModel has_secure_password

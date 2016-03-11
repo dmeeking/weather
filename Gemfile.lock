@@ -43,7 +43,6 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (8.2.2)
-    chartkick (1.4.2)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -76,7 +75,6 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
-    mysql2 (0.4.3)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     pg (0.18.4)
@@ -150,12 +148,10 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   byebug
-  chartkick
   coffee-rails (~> 4.1.0)
   groupdate
   jbuilder (~> 2.0)
   jquery-rails
-  mysql2
   nokogiri
   pg
   rails (= 4.2.6)
