@@ -305,14 +305,13 @@ footer .footer-below {
 }
 
 footer a:link, a:visited, a:hover{
-    color:#fff;
-    text-decoration: underline;
+    color:#18bc9c;
     background-color: transparent;
     font-size: 20px;
     
 } 
 footer p, footer a{
-    line-height: 150%;
+    line-height: 120%;
 }
 
 
