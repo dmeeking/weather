@@ -8,7 +8,7 @@ class WeatherReading < ActiveRecord::Base
 		self.wind_speed  ||= 0.0           #will set the default value only if it's nil
     end
 
-# Scheduled in schedule.rb
+# called by a rake task that is scheduled to run every hour
   def self.gather_web_weather
       require 'open-uri'
       url = "https://weather.gc.ca/past_conditions/index_e.html?station=yow"

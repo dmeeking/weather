@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reading_at: 2016-03-10 20:57:49
+  temperature: 9.99
+  wind_speed: 1
+  wind_direction: MyString
+
+two:
+  reading_at: 2016-03-10 20:57:49
+  temperature: 9.99
+  wind_speed: 1
+  wind_direction: MyString

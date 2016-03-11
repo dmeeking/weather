@@ -7,9 +7,18 @@ class HomeController < ApplicationController
 
   def temperature_readings
 
-  	render json: WeatherReading.group_by_hour(:reading_at, 
-  		range:1.days.ago.midnight..Date.tomorrow.midnight, 
-  		default_value:nil).average(:temperature)
+  	chartRange = 1.days.ago.midnight..Date.tomorrow.tomorrow.midnight
+  	forecastRange = Time.now..Date.tomorrow.tomorrow.midnight
+  	dateFormat = '%a, %d %b %Y %H:%M:%S %z';
+  	yowReadings = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).average(:temperature)
+	hourlyForecast = HourlyForecast.group_by_hour(:reading_at, format:dateFormat, range: forecastRange, default_value:nil).average(:temperature)
+
+  	highchartsData = {
+  		yowReadings: yowReadings,
+  		hourlyForecast: hourlyForecast
+  	}
+
+  	render json: highchartsData
   end
 
 end

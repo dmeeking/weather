@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310144056) do
+ActiveRecord::Schema.define(version: 20160311015749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "hourly_forecasts", force: :cascade do |t|
+    t.datetime "reading_at"
+    t.decimal  "temperature"
+    t.integer  "wind_speed"
+    t.string   "wind_direction"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "local_weather_readings", force: :cascade do |t|
     t.datetime "recorded_at"

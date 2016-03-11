@@ -11,20 +11,30 @@ $(function () {
 
    $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
 
-
-    var dateRange = new Array();
-    var temperatureValues = new Array();
-    var xData = new Array();
-    $.each( jsonData, function( key, val ) {
+    var yowData = new Array();
+    $.each( jsonData.yowReadings, function( key, val ) {
       var temp = (null == val) ? null : parseInt(val);
-      xData.push([Date.parse(key), temp]);
+      yowData.push([Date.parse(key), temp]);
 
     });
+
+    var hourlyForecast = new Array();
+    $.each( jsonData.hourlyForecast, function( key, val ) {
+      var temp = (null == val) ? null : parseInt(val);
+      hourlyForecast.push([Date.parse(key), temp]);
+    });
+
 
     $('#container-temp').highcharts({
 
         chart: {
-            type: "line"
+            type: "line",
+            animation: false
+        },
+        plotOptions: {
+            line: {
+                animation: false
+            }
         },
         title: {
             text: 'Temperature Trend',
@@ -37,40 +47,83 @@ $(function () {
         },   
          xAxis: {
           tickWidth: 1,
+          tickInterval: 1000*60*60*1,
           type: 'datetime',
           labels: {
+            step:4,
             formatter: function() {
-                var dateFormat = (new Date(this.value)).getHours() == 12 ? '%lN <br /> %a' : '%l%p';
+                
+                var hours = (new Date(this.value)).getHours();
+                var dateFormat = '';
+                switch(hours){
+                  case 0:
+                    dateFormat = '0%p';
+                    break;
+                  case 12:
+                    dateFormat = '%lN <br /> %a';
+                    break;
+                  default:
+                    dateFormat = '%l%p';
+                }
+
                 return Highcharts.dateFormat(dateFormat, this.value);
             }
-          }
+          },
+           plotLines: [{
+                color: '#bbb',
+                dashStyle: 'dash',
+                width: 1,
+                value: new Date()
+            }]
         },
-        yAxis: { 
+        yAxis: [{ 
+            tickInterval: 2,
             title: {
                 text: '°C'
+            },
+            allowDecimals: false
+        }, { 
+            linkedTo: 0,
+            opposite: true,
+            title: {
+                text: null
             }
-        },
+            }],
+
         tooltip: {
             enabled: false
         },
         legend: {
-            layout: 'vertical',
+            layout: 'horizontal',
             align: 'right',
-            verticalAlign: 'middle',
+            verticalAlign: 'bottom',
             borderWidth: 0
         },
         series: [{
             name: 'YOW',
-            data: xData,
+            color:'#C00',
+            data: yowData,
             marker: {
-                    enabled: false
+              enabled: false
             }, 
             states: {
-                        hover: {
-                            enabled: false
-                        }
-                    }
-
+              hover: {
+                  enabled: false
+              }
+            }},
+            {
+            name: 'Forecast',
+            dashStyle: 'dot',
+            color:'#C00',
+            data: hourlyForecast,
+            marker: {
+              enabled: false
+            }, 
+            states: {
+              hover: {
+                  enabled: false
+              }
+            }
         }]
 
     });
