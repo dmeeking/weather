@@ -36,7 +36,6 @@ $(function () {
       windSpeedForecast.push([Date.parse(key), speed]);
     });
 
-
     var defaults = {
         chart: {
             type: "line",
@@ -94,8 +93,7 @@ $(function () {
     $('#container-temp').highcharts($.extend({}, defaults, {
 
         title: {
-            text: 'Temperature',
-            x: -20 //center
+            text: 'Temperature'
         },
         yAxis: [{ 
             tickInterval: 2,
@@ -143,16 +141,14 @@ $(function () {
     $('#container-wind').highcharts($.extend({}, defaults, {
 
         title: {
-            text: 'Wind',
-            x: -20 //center
+            text: 'Wind'
         },
         yAxis: [{ 
-            tickInterval: 2,
-            title: {
-                text: 'km/h'
-            },
-            allowDecimals: false
-          }, { 
+          title: {
+              text: 'km/h'
+          },
+          allowDecimals: false
+        },{ 
             linkedTo: 0,
             opposite: true,
             title: {
@@ -160,22 +156,24 @@ $(function () {
             }
         }],
         series: [{
-            name: 'YOW',
-            color:'#C00',
+            name: 'Wind Speed',
+            color:'#00C',
             data: windSpeedData,
+            yAxis: 0,
             marker: {
               enabled: false
             }, 
             states: {
               hover: {
-                  enabled: false
+                enabled: false
               }
             }},
             {
             name: 'Forecast',
             dashStyle: 'dot',
-            color:'#C00',
+            color:'#00C',
             data: windSpeedForecast,
+            yAxis: 0,
             marker: {
               enabled: false
             }, 
