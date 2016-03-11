@@ -5,7 +5,7 @@ class WeatherReading < ActiveRecord::Base
     def init
       	self.temperature  ||= 0.0           #will set the default value only if it's nil
       	self.pressure  ||= 0.0           #will set the default value only if it's nil
-		self.wind_speed  ||= 0.0           #will set the default value only if it's nil
+		    self.wind_speed  ||= 0.0           #will set the default value only if it's nil
     end
 
 # called by a rake task that is scheduled to run every hour

@@ -18,15 +18,26 @@ $(function () {
 
     });
 
+    var windSpeedData = new Array();
+    $.each( jsonData.windSpeed, function( key, val ) {
+      var speed = (null == val) ? null : parseInt(val);
+      windSpeedData.push([Date.parse(key), speed]);
+    });
+
     var hourlyForecast = new Array();
     $.each( jsonData.hourlyForecast, function( key, val ) {
       var temp = (null == val) ? null : parseInt(val);
       hourlyForecast.push([Date.parse(key), temp]);
     });
 
+    var windSpeedForecast = new Array();
+    $.each( jsonData.windSpeedForecast, function( key, val ) {
+      var speed = (null == val) ? null : parseInt(val);
+      windSpeedForecast.push([Date.parse(key), speed]);
+    });
 
-    $('#container-temp').highcharts({
 
+    var defaults = {
         chart: {
             type: "line",
             animation: false
@@ -36,15 +47,6 @@ $(function () {
                 animation: false
             }
         },
-        title: {
-            text: 'Temperature Trend',
-            x: -20 //center
-        },
-
-        subtitle: {
-            text: '',
-            x: -20
-        },   
          xAxis: {
           tickWidth: 1,
           tickInterval: 1000*60*60*1,
@@ -76,20 +78,6 @@ $(function () {
                 value: new Date()
             }]
         },
-        yAxis: [{ 
-            tickInterval: 2,
-            title: {
-                text: '°C'
-            },
-            allowDecimals: false
-        }, { 
-            linkedTo: 0,
-            opposite: true,
-            title: {
-                text: null
-            }
-            }],
-
         tooltip: {
             enabled: false
         },
@@ -99,6 +87,29 @@ $(function () {
             verticalAlign: 'bottom',
             borderWidth: 0
         },
+
+    }
+
+
+    $('#container-temp').highcharts($.extend({}, defaults, {
+
+        title: {
+            text: 'Temperature',
+            x: -20 //center
+        },
+        yAxis: [{ 
+            tickInterval: 2,
+            title: {
+                text: '°C'
+            },
+            allowDecimals: false
+          }, { 
+            linkedTo: 0,
+            opposite: true,
+            title: {
+                text: null
+            }
+        }],
         series: [{
             name: 'YOW',
             color:'#C00',
@@ -126,15 +137,72 @@ $(function () {
             }
         }]
 
-    });
+    }));
+
+
+    $('#container-wind').highcharts($.extend({}, defaults, {
+
+        title: {
+            text: 'Wind',
+            x: -20 //center
+        },
+        yAxis: [{ 
+            tickInterval: 2,
+            title: {
+                text: 'km/h'
+            },
+            allowDecimals: false
+          }, { 
+            linkedTo: 0,
+            opposite: true,
+            title: {
+                text: null
+            }
+        }],
+        series: [{
+            name: 'YOW',
+            color:'#C00',
+            data: windSpeedData,
+            marker: {
+              enabled: false
+            }, 
+            states: {
+              hover: {
+                  enabled: false
+              }
+            }},
+            {
+            name: 'Forecast',
+            dashStyle: 'dot',
+            color:'#C00',
+            data: windSpeedForecast,
+            marker: {
+              enabled: false
+            }, 
+            states: {
+              hover: {
+                  enabled: false
+              }
+            }
+        }]
+
+    }));
 
   });
+
+
 });
 
 </script>
 <div class="row">
   <div class="col-xs-12">
       <div id="container-temp"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+      <div id="container-wind"></div>
   </div>
 </div>
 
