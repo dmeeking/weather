@@ -1,0 +1,87 @@
+
+
+<script type="text/javascript">
+  Highcharts.setOptions({
+    global: {
+      timezoneOffset: <%=Time.zone.utc_offset/ -60 %>
+    }
+  });
+
+$(function () {
+
+   $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
+
+
+    var dateRange = new Array();
+    var temperatureValues = new Array();
+    var xData = new Array();
+    $.each( jsonData, function( key, val ) {
+      var temp = (null == val) ? null : parseInt(val);
+      xData.push([Date.parse(key), temp]);
+
+    });
+
+    $('#container-temp').highcharts({
+
+        chart: {
+            type: "line"
+        },
+        title: {
+            text: 'Temperature Trend',
+            x: -20 //center
+        },
+
+        subtitle: {
+            text: '',
+            x: -20
+        },   
+         xAxis: {
+          tickWidth: 1,
+          type: 'datetime',
+          labels: {
+            formatter: function() {
+                var dateFormat = (new Date(this.value)).getHours() == 12 ? '%lN <br /> %a' : '%l%p';
+                return Highcharts.dateFormat(dateFormat, this.value);
+            }
+          }
+        },
+        yAxis: { 
+            title: {
+                text: '°C'
+            }
+        },
+        tooltip: {
+            enabled: false
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'YOW',
+            data: xData,
+            marker: {
+                    enabled: false
+            }, 
+            states: {
+                        hover: {
+                            enabled: false
+                        }
+                    }
+
+        }]
+
+    });
+
+  });
+});
+
+</script>
+<div class="row">
+  <div class="col-xs-12">
+      <div id="container-temp"></div>
+  </div>
+</div>
+
