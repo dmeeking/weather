@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 	if Rails.env.production?
 	    if request.env['HTTP_HOST'] != APP_DOMAIN
 	      # HTTP 301 is a "permanent" redirect
-	      redirect_to "http://#{APP_DOMAIN}", :status => 301
+	      #redirect_to "http://#{APP_DOMAIN}", :status => 301
 	    end
 	end
   end
