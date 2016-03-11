@@ -27,7 +27,6 @@ module Weather
     # lock to my local time zone
     config.time_zone = 'Eastern Time (US & Canada)'
 
-
-    config.production_url = 'www.yowx.ca'
   end
+
 end
