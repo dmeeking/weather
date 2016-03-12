@@ -9,15 +9,15 @@ class HomeController < ApplicationController
 
  # 	chartRange = 1.days.ago.midnight..Date.tomorrow.tomorrow.midnight
   	chartRange = 1.days.ago.midnight..-23.hours.ago
-  	forecastRange = Time.now..-23.hours.ago
+  	forecastRange = 1.hours.ago..-23.hours.ago
   	dateFormat = '%a, %d %b %Y %H:%M:%S %z';
 
   	hourlyForecast = HourlyForecast.group_by_hour(:reading_at, format:dateFormat, range: forecastRange, default_value:nil).average(:temperature)
-	windForecast = HourlyForecast.group_by_hour(:reading_at, format:dateFormat, range: forecastRange, default_value:nil).average(:wind_speed)
+	  windForecast = HourlyForecast.group_by_hour(:reading_at, format:dateFormat, range: forecastRange, default_value:nil).average(:wind_speed)
 
 # Todo: Someday we can figure out how to return multiple aggregates in group_by
   	yowReadings = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).average(:temperature)
-	windSpeed = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).average(:wind_speed)
+	  windSpeed = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).average(:wind_speed)
 	#windDirection = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).minimum(:wind_direction)
 
 	#ar2 = windDirection.map {|a|
