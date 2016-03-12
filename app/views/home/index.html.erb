@@ -35,6 +35,8 @@ $(function () {
       windSpeedForecast.push([Date.parse(key), speed]);
     });
 
+    var defaultFontSize = '18px';
+
     var defaults = {
         title: {
           text: null
@@ -57,6 +59,7 @@ $(function () {
           minorTickInterval: 1000*60*60,
           minorGridLineWidth: 1,
           minorTickLength:0,
+          tickColor: '#DDD',
           gridLineWidth: 2,
           tickWidth: 2,
           tickInterval: 1000*60*60*4,
@@ -81,7 +84,7 @@ $(function () {
                 return Highcharts.dateFormat(dateFormat, this.value);
             },
             style: {
-              fontSize: '15px'
+              fontSize: defaultFontSize
             }
           },
            plotLines: [{
@@ -101,7 +104,7 @@ $(function () {
             verticalAlign: 'bottom',
             borderWidth: 0,
             itemStyle: {
-              fontSize: '15px'
+              fontSize: defaultFontSize
             },
             symbolWidth:20
         }
@@ -114,7 +117,7 @@ $(function () {
             tickInterval: 2,
             tickWidth: 2,
             gridLineWidth: 2,
-            
+            tickColor: '#DDD',
             minorTickWidth: 1,
             minorTickInterval: 1,
             minorGridLineWidth: 1,
@@ -126,7 +129,7 @@ $(function () {
             allowDecimals: false,
             labels:{
               style: {
-                fontSize: '15px'
+                fontSize: defaultFontSize
               }}
 
           }, { 
@@ -141,8 +144,9 @@ $(function () {
                 text: null
             },
             labels:{
+            
               style: {
-                fontSize: '15px'
+                fontSize: defaultFontSize
               }}
         }],
         series: [{
@@ -181,13 +185,14 @@ $(function () {
         yAxis: [{ 
           gridLineWidth: 2,
           minorGridLineWidth: 1,
+
           title: {
               text: 'km/h'
           },
           allowDecimals: false,
           labels:{
             style: {
-              fontSize: '15px'
+              fontSize: defaultFontSize
             }}
         },{ 
             linkedTo: 0,
@@ -198,7 +203,7 @@ $(function () {
             ,
           labels:{
             style: {
-              fontSize: '15px'
+              fontSize: defaultFontSize
             }}
         }],
         series: [{
