@@ -22,8 +22,6 @@ class HomeController < ApplicationController
     windForecast = HourlyForecast.group_by_hour(:reading_at, format:dateFormat, range: forecastRange, default_value:nil).average(:wind_speed)
 
 
-
-
   	highchartsData = {
   		yowReadings: yowReadings,
   		hourlyForecast: hourlyForecast,

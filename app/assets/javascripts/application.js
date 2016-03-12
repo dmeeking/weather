@@ -11,11 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.easing
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
-//= require bootstrap.min
-//= require classie
-//= require cbpAnimatedHeader
-//= require freelancer
+//= require highcharts/highcharts
+//= require highcharts/grid-light

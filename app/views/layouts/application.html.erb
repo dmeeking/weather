@@ -7,26 +7,15 @@
   
     <title>Ottawa Local Weather</title>
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all'%>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag "https://code.highcharts.com/highcharts.js", 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag "https://code.highcharts.com/themes/grid-light.js", 'data-turbolinks-track' => true %>
-  <% if Rails.env.production? -%>
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-75012317-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-  <% end -%>
+  <%= javascript_include_tag 'application' %>
+
   <%= csrf_meta_tags %>
 </head>
 <body id="page-top" class="index">
  <!-- Navigation -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top navbar-shrink">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -124,6 +113,15 @@
             </div>
         </div>
     </footer>
-
+  <% if Rails.env.production? -%>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75012317-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <% end -%>
 </body>
 </html>
