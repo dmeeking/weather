@@ -21,7 +21,7 @@ class WeatherReading < ActiveRecord::Base
 
 
           time = item.children[1].text
-          temperature = item.children[5].text.split("\u{00A0}")[0].gsub!(/\W/,'') # it's a non-breaking space, not a regular space
+          temperature = item.children[5].text.split("\u{00A0}")[0]#.gsub!(/\W/,'') # it's a non-breaking space, not a regular space
           wind = item.children[9].text.split(" ") 
           wind_dir = wind[0].strip
           wind_speed = wind[1]
