@@ -39,21 +39,30 @@ $(function () {
         title: {
           text: null
         },
+        credits:{
+          enabled:false
+        },
         chart: {
             type: "line",
             animation: false
         },
         plotOptions: {
             line: {
-                animation: false
+                animation: false,
+                lineWidth: 2
             }
         },
          xAxis: {
-          tickWidth: 1,
-          tickInterval: 1000*60*60*1,
+          minorTickWidth: 1,
+          minorTickInterval: 1000*60*60,
+          minorGridLineWidth: 1,
+          minorTickLength:0,
+          gridLineWidth: 2,
+          tickWidth: 2,
+          tickInterval: 1000*60*60*4,
           type: 'datetime',
           labels: {
-            step:4,
+            step:0,
             formatter: function() {
                 
                 var hours = (new Date(this.value)).getHours();
@@ -70,6 +79,9 @@ $(function () {
                 }
 
                 return Highcharts.dateFormat(dateFormat, this.value);
+            },
+            style: {
+              fontSize: '15px'
             }
           },
            plotLines: [{
@@ -77,8 +89,9 @@ $(function () {
                 dashStyle: 'dash',
                 width: 1,
                 value: new Date()
-            }]
+            }] 
         },
+       
         tooltip: {
             enabled: false
         },
@@ -86,8 +99,12 @@ $(function () {
             layout: 'horizontal',
             align: 'right',
             verticalAlign: 'bottom',
-            borderWidth: 0
-        },
+            borderWidth: 0,
+            itemStyle: {
+              fontSize: '15px'
+            },
+            symbolWidth:20
+        }
 
     }
 
@@ -95,16 +112,38 @@ $(function () {
     $('#container-temp').highcharts($.extend({}, defaults, {
         yAxis: [{ 
             tickInterval: 2,
+            tickWidth: 2,
+            gridLineWidth: 2,
+            
+            minorTickWidth: 1,
+            minorTickInterval: 1,
+            minorGridLineWidth: 1,
+            minorTickLength:0,
+
             title: {
                 text: '°C'
             },
-            allowDecimals: false
+            allowDecimals: false,
+            labels:{
+              style: {
+                fontSize: '15px'
+              }}
+
           }, { 
+
+          
+            minorGridLineWidth: 0,
+            gridLineWidth:0,
+           
             linkedTo: 0,
             opposite: true,
             title: {
                 text: null
-            }
+            },
+            labels:{
+              style: {
+                fontSize: '15px'
+              }}
         }],
         series: [{
             name: 'Observed',
@@ -120,7 +159,7 @@ $(function () {
             }},
             {
             name: 'Forecast',
-            dashStyle: 'dot',
+            dashStyle: 'ShortDash',
             color:'#C00',
             data: hourlyForecast,
             marker: {
@@ -140,16 +179,27 @@ $(function () {
 
       
         yAxis: [{ 
+          gridLineWidth: 2,
+          minorGridLineWidth: 1,
           title: {
               text: 'km/h'
           },
-          allowDecimals: false
+          allowDecimals: false,
+          labels:{
+            style: {
+              fontSize: '15px'
+            }}
         },{ 
             linkedTo: 0,
             opposite: true,
             title: {
                 text: null
             }
+            ,
+          labels:{
+            style: {
+              fontSize: '15px'
+            }}
         }],
         series: [{
             name: 'Observed',
@@ -166,7 +216,7 @@ $(function () {
             }},
             {
             name: 'Forecast',
-            dashStyle: 'dot',
+            dashStyle: 'ShortDash',
             color:'#00C',
             data: windSpeedForecast,
             yAxis: 0,

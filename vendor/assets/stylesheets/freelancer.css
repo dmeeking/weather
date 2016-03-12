@@ -384,5 +384,6 @@ footer .footer-below {
 }
 
 .condition-value {
-    color:#FFF;
+    color:#fff;
+    border-bottom:dotted 1px #fff ;
 }
