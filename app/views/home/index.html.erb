@@ -1,3 +1,39 @@
+<section class="chart">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 portfolio-item text-center well well-lg">
+        <h3>Temperature</h3>
+        <div id="container-temp" class="chart-container">
+          <div class="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="chart">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 portfolio-item text-center well well-lg">
+        <h3>Wind Speed</h3>
+        <div id="container-wind" class="chart-container">
+          <div class="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="chart">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 portfolio-item text-center well well-lg">
+        <h3>Barometric Pressure</h3>
+        <div id="container-pressure" class="chart-container">
+          <div class="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script type="text/javascript">
 
@@ -9,36 +45,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
   });
    $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
 
-    var yowData = new Array();
-    $.each( jsonData.yowReadings, function( key, val ) {
-      var temp = (null == val) ? null : parseInt(val);
-      yowData.push([Date.parse(key), temp]);
+    var yowData = new Array(), windSpeedData = new Array(), pressureReadings = new Array();
+    $.each( jsonData.observed, function( key, val ) {
+    
+      var readingDate = Date.parse(key);
+      var reading = val[0];
 
-    });
+      var temperature = (null == reading) ? null : parseInt(reading.temperature);
+      var speed = (null == reading) ? null : parseInt(reading.wind_speed);
+      var pressure = (null == reading) ? null : parseFloat(reading.pressure);
+     
+      yowData.push([readingDate, temperature]);
+      windSpeedData.push([readingDate, speed]);
+      pressureReadings.push([readingDate, pressure]);
 
-    var windSpeedData = new Array();
-    $.each( jsonData.windSpeed, function( key, val ) {
-      var speed = (null == val) ? null : parseInt(val);
-      windSpeedData.push([Date.parse(key), speed]);
     });
 
     var hourlyForecast = new Array();
-    $.each( jsonData.hourlyForecast, function( key, val ) {
-      var temp = (null == val) ? null : parseInt(val);
-      hourlyForecast.push([Date.parse(key), temp]);
-    });
-
     var windSpeedForecast = new Array();
-    $.each( jsonData.windSpeedForecast, function( key, val ) {
-      var speed = (null == val) ? null : parseInt(val);
-      windSpeedForecast.push([Date.parse(key), speed]);
-    });
+    $.each( jsonData.forecast, function( key, val ) {
+      var forecastDate = Date.parse(key);
+      var forecast = val[0];
 
-    var pressureReadings = new Array();
-    $.each( jsonData.pressureReadings, function( key, val ) {
-      var pressure = (null == val) ? null : parseFloat(val);
-      pressureReadings.push([Date.parse(key), pressure]);
+      var temperature = (null == forecast) ? null : parseInt(forecast.temperature);
+      var speed = (null == forecast) ? null : parseInt(forecast.wind_speed);
+
+      hourlyForecast.push([forecastDate, temperature]);
+      windSpeedForecast.push([forecastDate, speed]);
+
     });
+    
 
     var defaultFontSize = '20px';
 
@@ -115,8 +151,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
 
     }
-
-
     $('#container-temp').highcharts($.extend({}, defaults, {
         yAxis: [{ 
             tickInterval: 2,
@@ -299,39 +333,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 </script>
-<section class="chart">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 portfolio-item text-center well well-lg">
-        <h3>Temperature</h3>
-        <div id="container-temp" class="chart-container">
-          <div class="loader">Loading...</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="chart">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 portfolio-item text-center well well-lg">
-        <h3>Wind Speed</h3>
-        <div id="container-wind" class="chart-container">
-          <div class="loader">Loading...</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="chart">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 portfolio-item text-center well well-lg">
-        <h3>Barometric Pressure</h3>
-        <div id="container-pressure" class="chart-container">
-          <div class="loader">Loading...</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
