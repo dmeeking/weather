@@ -32,38 +32,25 @@ header {
     color: #fff;
     background: #18bc9c;
     .container {
-        padding-top: 100px;
-        padding-bottom: 40px;
+        padding-top: 95px;
+        padding-bottom: 10px;
     }
     .intro-text h3 {
         margin:0;
     }
 
-    
 
 }
 
 
-
-@media(min-width:768px) {
-
-    header .container {
-        padding-top: 95px;
-        padding-bottom: 10px;
-    }
-
-    header .intro-text .skills {
-        font-size: 1.75em;
-    }
-
-    .navbar-fixed-top.navbar-shrink {
-        padding: 10px 0;
-    }
-
-    .navbar-fixed-top.navbar-shrink .navbar-brand {
-        font-size: 1.5em;
-    }
+.navbar-fixed-top.navbar-shrink {
+    padding: 10px 0;
 }
+
+.navbar-fixed-top.navbar-shrink .navbar-brand {
+    font-size: 1.5em;
+}
+
 
 .navbar {
     text-transform: uppercase;
@@ -111,17 +98,6 @@ section {
         
     }
 }
-
-@media(max-width:767px) {
-    section {
-        padding: 75px 0;
-    }
-
-    section.first {
-        padding-top: 75px;
-    }
-}
-
 
 
 #portfolio .portfolio-item {
