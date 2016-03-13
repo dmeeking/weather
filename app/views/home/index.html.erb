@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       pressureReadings.push([Date.parse(key), pressure]);
     });
 
-    var defaultFontSize = '18px';
+    var defaultFontSize = '20px';
 
     var defaults = {
         title: {
@@ -129,7 +129,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
             minorTickLength:0,
 
             title: {
-                text: '°C'
+                text: '°C',
+                style:{
+                  fontSize: defaultFontSize,
+                  textTransform: 'none'
+                }
             },
             allowDecimals: false,
             labels:{
@@ -188,7 +192,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
           minorGridLineWidth: 1,
 
           title: {
-              text: 'km/h'
+              text: 'km/h',
+              style:{
+                fontSize: defaultFontSize,
+                textTransform: 'none'
+              }
           },
           allowDecimals: false,
           labels:{
@@ -243,7 +251,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
             gridLineWidth: 2,
             minorGridLineWidth: 1,
             title: {
-                text: 'kPa'
+                text: 'kPa',
+                style:{
+                  fontSize: defaultFontSize,
+                  textTransform: 'none'
+                }
             },
             allowDecimals: true,
             labels:{

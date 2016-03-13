@@ -32,7 +32,7 @@ header {
     color: #fff;
     background: #18bc9c;
     .container {
-        padding-top: 95px;
+        padding-top: 90px;
         padding-bottom: 10px;
     }
     .intro-text h3 {
@@ -40,12 +40,9 @@ header {
     }
 
 
+
 }
 
-
-.navbar-fixed-top.navbar-shrink {
-    padding: 10px 0;
-}
 
 .navbar-fixed-top.navbar-shrink .navbar-brand {
     font-size: 1.5em;
@@ -60,18 +57,19 @@ header {
     .navbar-default, .navbar-text {
         color: #777777;
     }
-}
 
-.navbar a:focus {
-    outline: 0;
-}
-
-.navbar .navbar-nav {
-    letter-spacing: 1px;
-}
-
-.navbar .navbar-nav li a:focus {
-    outline: 0;
+    .navbar-text{
+        font-size: 25px
+    }
+    a:focus {
+        outline: 0;
+    }
+    .navbar-nav {
+        letter-spacing: 1px;
+    }
+    .navbar-nav li a:focus {
+        outline: 0;
+    }
 }
 
 
