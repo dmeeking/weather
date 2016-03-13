@@ -1,4 +1,4 @@
- source 'https://rubygems.org'
+source 'https://rubygems.org'
 ruby '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -30,7 +30,8 @@ gem 'heroku-deflater', :group => :production
 gem 'active_link_to'
 gem 'groupdate'
 gem 'nokogiri'
-gem 'jquery-easing-rails'
+gem 'bootstrap-sass', '~> 3.3.6'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

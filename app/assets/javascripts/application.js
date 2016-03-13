@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require_tree .
 //= require highcharts/highcharts
 //= require highcharts/grid-light
+
