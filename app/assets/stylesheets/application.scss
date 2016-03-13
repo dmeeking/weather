@@ -1,3 +1,8 @@
+
+$web-font-path: "https://fonts.googleapis.com/css?family=Droid+Sans:400,700" !default;
+
+@import url($web-font-path);
+
 @import "bootstrap-sprockets";
 @import "flatly/_variables";
 @import "bootstrap_custom";
