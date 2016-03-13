@@ -1,9 +1,30 @@
 class HomeController < ApplicationController
   def index
+    require 'open-uri'
+    alerts_url = 'https://weather.gc.ca/rss/warning/on-118_e.xml'
+    doc = Nokogiri::HTML(open(alerts_url))
+    entry = doc.css("entry")
+
+     # currentDate = Date.today
+     # doc.css("tbody tr").each do |item|
+     #   if date = item.at_css('th')
+     #     currentDate = date.text;
+    @test = entry
+    @has_alert = entry.length > 0
+    if @has_alert
+
+      @alert_summary =entry.css('summary').text
+      if @alert_summary == 'No watches or warnings in effect.'
+        @has_alert =false
+      else
+        @alert_url = entry.css('link')[0]['href']
+        @alert_title = entry.css('title').text
+      end
+    end
   end
 
-  def about
-  end
+
+
 
   def temperature_readings
 

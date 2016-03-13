@@ -1,3 +1,16 @@
+<% if @has_alert == true  %>
+
+  <div class="container">
+
+  <div class="alert alert-danger" role="alert">
+    <strong><%=@alert_title%></strong>
+    <div><%=@alert_summary%>&nbsp; 
+    <a href="<%=@alert_url%>" class="alert-link">details</a>
+  </div>
+  </div>
+</div>
+
+<% end %>
 <section class="chart">
   <div class="container">
     <div class="row">
