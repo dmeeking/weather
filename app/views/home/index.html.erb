@@ -35,6 +35,12 @@ $(function () {
       windSpeedForecast.push([Date.parse(key), speed]);
     });
 
+    var pressureReadings = new Array();
+    $.each( jsonData.pressureReadings, function( key, val ) {
+      var pressure = (null == val) ? null : parseFloat(val);
+      pressureReadings.push([Date.parse(key), pressure]);
+    });
+
     var defaultFontSize = '18px';
 
     var defaults = {
@@ -133,10 +139,6 @@ $(function () {
               }}
 
           }, { 
-
-          
-            minorGridLineWidth: 0,
-            gridLineWidth:0,
            
             linkedTo: 0,
             opposite: true,
@@ -237,6 +239,49 @@ $(function () {
 
     }));
 
+    $('#container-pressure').highcharts($.extend({}, defaults, {
+        yAxis: [{ 
+            gridLineWidth: 2,
+            minorGridLineWidth: 1,
+            title: {
+                text: 'kPa'
+            },
+            allowDecimals: true,
+            labels:{
+              style: {
+                fontSize: defaultFontSize
+              }}
+
+          }, { 
+            minorGridLineWidth: 0,
+            gridLineWidth:0,
+           
+            linkedTo: 0,
+            opposite: true,
+            title: {
+                text: null
+            },
+            labels:{
+            
+              style: {
+                fontSize: defaultFontSize
+              }}
+        }],
+        series: [{
+            name: 'Observed',
+            color:'#0C0',
+            data: pressureReadings,
+            marker: {
+              enabled: false
+            }, 
+            states: {
+              hover: {
+                  enabled: false
+              }
+            }}]
+
+    }));
+
   });
 
 
@@ -247,7 +292,7 @@ $(function () {
   <div class="container">
     <div class="row">
       <div class="col-xs-12 portfolio-item text-center well well-lg">
-        <h2>Temperature</h2>
+        <h3>Temperature</h3>
         <div id="container-temp"></div>
       </div>
     </div>
@@ -257,7 +302,7 @@ $(function () {
   <div class="container">
     <div class="row">
       <div class="col-xs-12 portfolio-item text-center well well-lg">
-        <h2>Wind Speed</h2>
+        <h3>Wind Speed</h3>
         <div id="container-wind"></div>
       </div>
     </div>
@@ -267,7 +312,7 @@ $(function () {
   <div class="container">
     <div class="row">
       <div class="col-xs-12 portfolio-item text-center well well-lg">
-        <h2>Barometric Pressure</h2>
+        <h3>Barometric Pressure</h3>
         <div id="container-pressure"></div>
       </div>
     </div>

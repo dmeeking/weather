@@ -7,13 +7,14 @@ class HomeController < ApplicationController
 
   def temperature_readings
 
- # 	chartRange = 1.days.ago.midnight..Date.tomorrow.tomorrow.midnight
   	chartRange = 1.days.ago.midnight..-23.hours.ago
+    chartRangePressure = 1.days.ago.midnight..Time.now
   	dateFormat = '%a, %d %b %Y %H:%M:%S %z';
 
-# Todo: Someday we can figure out how to return multiple aggregates in group_by
+# Todo: Someday I can figure out how to return multiple aggregates in group_by
   	yowReadings = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).average(:temperature)
 	  windSpeed = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).average(:wind_speed)
+    pressureReadings = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRangePressure, default_value:nil).average(:pressure)
 	#windDirection = WeatherReading.group_by_hour(:reading_at, format:dateFormat, range: chartRange, default_value:nil).minimum(:wind_direction)
 
     forecastRange = WeatherReading.order(reading_at: :desc).limit(1).first.reading_at..-23.hours.ago
@@ -27,6 +28,7 @@ class HomeController < ApplicationController
   		hourlyForecast: hourlyForecast,
   		windSpeed: windSpeed,
   		windSpeedForecast: windForecast,
+      pressureReadings: pressureReadings
   		#windDirection: ar2
   	}
 
