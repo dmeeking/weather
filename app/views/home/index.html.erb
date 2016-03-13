@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   });
    $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
 
-    var yowData = new Array(), windSpeedData = new Array(), pressureReadings = new Array();
+    var yowData = new Array(), windSpeedData = new Array(), windDirectionData = new Array(), pressureReadings = new Array();
     $.each( jsonData.observed, function( key, val ) {
     
       var readingDate = Date.parse(key);
@@ -53,13 +53,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       var temperature = (null == reading) ? null : parseInt(reading.temperature);
       var speed = (null == reading) ? null : parseInt(reading.wind_speed);
+      var directionName = (null == reading) ? null : reading.wind_direction;
+      var direction = translateDirection(directionName);
       var pressure = (null == reading) ? null : parseFloat(reading.pressure);
      
       yowData.push([readingDate, temperature]);
       windSpeedData.push([readingDate, speed]);
+      windDirectionData.push({
+        x: readingDate, 
+        y: direction,
+        name: directionName});
       pressureReadings.push([readingDate, pressure]);
 
     });
+
+    function translateDirection(textDir){
+      
+      if(null == textDir) return null;
+
+      var map = jsonData.windDirections[textDir];
+      if(null == map) return null;
+
+      return map  
+     
+    }
 
     var hourlyForecast = new Array();
     var windSpeedForecast = new Array();
@@ -74,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       windSpeedForecast.push([forecastDate, speed]);
 
     });
-    
 
     var defaultFontSize = '20px';
 
@@ -232,23 +248,43 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 textTransform: 'none'
               }
           },
-          allowDecimals: false,
+          //allowDecimals: false,
           labels:{
             style: {
               fontSize: defaultFontSize
             }}
         },{ 
-            linkedTo: 0,
-            opposite: true,
-            title: {
-                text: null
-            }
-            ,
-          labels:{
+          id: 'wd',
+          opposite:true,
+          gridLineWidth: 0,
+          minorGridLineWidth: 0,
+          tickInterval: 22.5,
+          title: null,
+          allowDecimals: true,
+          type:'category',
+          labels: {
+            step:0,
+            formatter: function() {
+              var value = parseFloat(this.value);
+              
+              var label = '';
+              if(value == 0 || (value % 22.5 == 0)) {
+                $.each(jsonData.windDirections, function(k, v) {
+                    if (v == value) {
+                      label = k;
+                    }
+                });
+              }
+              
+              return label;
+            },
             style: {
-              fontSize: defaultFontSize
-            }}
-        }],
+              fontSize: defaultFontSize,
+             
+            }
+          }
+        }
+        ],
         series: [{
             name: 'Observed',
             color:'#00C',
@@ -276,7 +312,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
                   enabled: false
               }
             }
-        }]
+        },
+            {
+            name: 'Direction',
+            dashStyle: 'ShortDash',
+            type: 'scatter',
+            color:'#FC0',
+            data: windDirectionData,
+            yAxis: 'wd',
+            marker: {
+              radius: 4
+            }, 
+            states: {
+              hover: {
+                  enabled: false
+              }
+            }
+        }
+
+        ]
 
     }));
 
@@ -300,7 +354,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }, { 
             minorGridLineWidth: 0,
             gridLineWidth:0,
-           
             linkedTo: 0,
             opposite: true,
             title: {

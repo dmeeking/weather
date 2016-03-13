@@ -20,18 +20,23 @@ class HomeController < ApplicationController
 
     render json: {
         observed: allReadings,
-        forecast: allForecasts
+        forecast: allForecasts,
+        windDirections: wind_direction_map
       }
   end
 
-  def degrees_from_direction(direction)
-  	 directions = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-  	 index = directions.index(direction)
-  	 index = index.nil? ? 0 : index
-  	 
-  	 11.5 + (index * 22.5)
+  # returns a numerical mapping of text directions to degrees
+  def wind_direction_map
+    wind_directions = ["NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
+    magic_map = {
 
+    }
+    wind_directions.each_with_index { |x, index| 
+        magic_map[x] = (index+1) * 22.5
+     }
+    magic_map
   end
+
 
 
 end
