@@ -1,13 +1,12 @@
 
 <script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function(event) { 
   Highcharts.setOptions({
     global: {
       timezoneOffset: <%=Time.zone.utc_offset/ -60 %>
     }
   });
-
-$(function () {
-
    $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
 
     var yowData = new Array();
@@ -293,7 +292,9 @@ $(function () {
     <div class="row">
       <div class="col-xs-12 portfolio-item text-center well well-lg">
         <h3>Temperature</h3>
-        <div id="container-temp"></div>
+        <div id="container-temp" class="chart-container">
+          <div class="loader">Loading...</div>
+        </div>
       </div>
     </div>
   </div>
@@ -303,7 +304,9 @@ $(function () {
     <div class="row">
       <div class="col-xs-12 portfolio-item text-center well well-lg">
         <h3>Wind Speed</h3>
-        <div id="container-wind"></div>
+        <div id="container-wind" class="chart-container">
+          <div class="loader">Loading...</div>
+        </div>
       </div>
     </div>
   </div>
@@ -313,7 +316,9 @@ $(function () {
     <div class="row">
       <div class="col-xs-12 portfolio-item text-center well well-lg">
         <h3>Barometric Pressure</h3>
-        <div id="container-pressure"></div>
+        <div id="container-pressure" class="chart-container">
+          <div class="loader">Loading...</div>
+        </div>
       </div>
     </div>
   </div>
