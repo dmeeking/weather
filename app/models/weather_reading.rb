@@ -20,16 +20,16 @@ class WeatherReading < ActiveRecord::Base
         else
 
 
-          time = item.children[1].text
-          temperature = item.children[5].text.split("\u{00A0}")[0]#.gsub!(/\W-/,'') # it's a non-breaking space, not a regular space
-          wind = item.children[9].text.split(" ") 
+          time = item.at_css('td[headers="header1"]').text
+          temperature = item.at_css('td[headers="header3m"]').text.split("\u{00A0}")[0]#.gsub!(/\W-/,'') # it's a non-breaking space, not a regular space
+          wind = item.at_css('td[headers="header4m"]').text.split(" ") 
           wind_dir = wind[0].strip
           wind_speed = wind[1]
-          humidity = item.children[13].text
-          dew_point = item.children[15].text
-          pressure = item.children[23].text
+          humidity = item.at_css('td[headers="header7"]').text
+          dew_point = item.at_css('td[headers="header8"]').text
+          pressure = item.at_css('td[headers="header9m"]').text
           historicalDateTime = DateTime.parse("#{currentDate} #{time} #{Time.zone}")
-        #  puts "#{historicalDateTime} -#{wind_dir} - #{wind_speed} - #{pressure}"
+         # puts "#{historicalDateTime} -#{wind_dir} - #{wind_speed} - #{pressure}"
 
 
           reading = WeatherReading.where(reading_at: historicalDateTime.utc).first_or_initialize
