@@ -3,9 +3,6 @@ class HomeController < ApplicationController
     @alerts = WeatherAlert.where(active: true)
   end
 
-
-
-
   def temperature_readings
 
   	chartRange = 1.days.ago.midnight..-24.hours.ago
@@ -26,12 +23,10 @@ class HomeController < ApplicationController
       }
   end
 
-  # returns a numerical mapping of text directions to degrees
+  # returns a numerical mapping of text directions to degrees. This object gets used client-side to translate back & forth too
   def wind_direction_map
     wind_directions = ["NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"];
-    magic_map = {
-
-    }
+    magic_map = {}
     wind_directions.each_with_index { |x, index| 
         magic_map[x] = (index+1) * 22.5
      }
