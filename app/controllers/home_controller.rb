@@ -25,18 +25,15 @@ class HomeController < ApplicationController
 
   def alerts
 
+
+    Pushpad.auth_token = '616e5014fc9d9d095232f049c0df0188'
+    Pushpad.project_id = 557 # set it here or pass it as a param to methods later
+
     #https://dashboard.pusher.com/apps/187393/getting_started
-    require 'pusher'
-
-    pusher_client = Pusher::Client.new(
-      app_id: '187393',
-      key: '8dfcfbf6ec0b5a3346b8',
-      secret: 'f17ab5e848b1c8e43f35',
-      encrypted: true
-    )
-
-    pusher_client.trigger('test_channel', 'my_event', {
-      message: 'hello world'
+    notification = Pushpad::Notification.new({
+      body: "Hello world!",
+      title: "Website Name", # optional, defaults to your project name
+      target_url: "https://yowx.ca" # optional, defaults to your project website
     })
 
   end
