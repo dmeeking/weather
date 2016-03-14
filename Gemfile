@@ -27,6 +27,7 @@ gem 'puma'
 gem 'rails_12factor', group: :production
 gem 'heroku-deflater', :group => :production
 
+gem "figaro"
 gem 'active_link_to'
 gem 'groupdate'
 gem 'nokogiri'
