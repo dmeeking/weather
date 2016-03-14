@@ -1,26 +1,44 @@
 class HomeController < ApplicationController
   def index
-    require 'open-uri'
-    alerts_url = 'https://weather.gc.ca/rss/warning/on-118_e.xml'
-    doc = Nokogiri::HTML(open(alerts_url))
-    entry = doc.css("entry")
 
-     # currentDate = Date.today
-     # doc.css("tbody tr").each do |item|
-     #   if date = item.at_css('th')
-     #     currentDate = date.text;
-    @test = entry
-    @has_alert = entry.length > 0
-    if @has_alert
+      cached_entry = Rails.cache.fetch("home-alerts", expires_in: 20.minutes) do
+     #   logger.debug "fetching alerts"
+        require 'open-uri'
+        alerts_url = 'https://weather.gc.ca/rss/warning/on-118_e.xml'
+        doc = Nokogiri::HTML(open(alerts_url))
+        doc.css("entry").to_html
+      end
 
-      @alert_summary =entry.css('summary').text
+      cached_entry = Nokogiri::HTML(cached_entry)
+  
+      @has_alert = true
+    
+      @alert_summary =cached_entry.css('summary').text
       if @alert_summary == 'No watches or warnings in effect.'
         @has_alert =false
       else
-        @alert_url = entry.css('link')[0]['href']
-        @alert_title = entry.css('title').text
+        @alert_url = cached_entry.css('link')[0]['href']
+        @alert_title = cached_entry.css('title').text
       end
-    end
+  end
+
+
+  def alerts
+
+    #https://dashboard.pusher.com/apps/187393/getting_started
+    require 'pusher'
+
+    pusher_client = Pusher::Client.new(
+      app_id: '187393',
+      key: '8dfcfbf6ec0b5a3346b8',
+      secret: 'f17ab5e848b1c8e43f35',
+      encrypted: true
+    )
+
+    pusher_client.trigger('test_channel', 'my_event', {
+      message: 'hello world'
+    })
+
   end
 
 

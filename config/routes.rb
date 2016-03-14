@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
   get '/temperature_readings', to: "home#temperature_readings"
+  get 'alerts' => 'home#alerts'
 
 
   # Example of regular route:
