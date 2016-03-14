@@ -26,16 +26,7 @@ class HomeController < ApplicationController
   def alerts
 
 
-    Pushpad.auth_token = '616e5014fc9d9d095232f049c0df0188'
-    Pushpad.project_id = 557 # set it here or pass it as a param to methods later
-
-    #https://dashboard.pusher.com/apps/187393/getting_started
-    notification = Pushpad::Notification.new({
-      body: "Hello world!",
-      title: "Website Name", # optional, defaults to your project name
-      target_url: "https://yowx.ca" # optional, defaults to your project website
-    })
-
+   
   end
 
 
