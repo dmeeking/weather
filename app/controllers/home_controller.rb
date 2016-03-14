@@ -1,32 +1,6 @@
 class HomeController < ApplicationController
   def index
-
-      cached_entry = Rails.cache.fetch("home-alerts", expires_in: 20.minutes) do
-     #   logger.debug "fetching alerts"
-        require 'open-uri'
-        alerts_url = 'https://weather.gc.ca/rss/warning/on-118_e.xml'
-        doc = Nokogiri::HTML(open(alerts_url))
-        doc.css("entry").to_html
-      end
-
-      cached_entry = Nokogiri::HTML(cached_entry)
-  
-      @has_alert = true
-    
-      @alert_summary =cached_entry.css('summary').text
-      if @alert_summary == 'No watches or warnings in effect.'
-        @has_alert =false
-      else
-        @alert_url = cached_entry.css('link')[0]['href']
-        @alert_title = cached_entry.css('title').text
-      end
-  end
-
-
-  def alerts
-
-
-   
+    @alerts = WeatherAlert.where(active: true)
   end
 
 

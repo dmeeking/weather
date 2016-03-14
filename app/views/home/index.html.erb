@@ -1,16 +1,14 @@
-<% if @has_alert == true  %>
-
+<% @alerts.each do |alert| %>
   <div class="container">
-
-  <div class="alert alert-danger" role="alert">
-    <strong><%=@alert_title%></strong>
-    <div><%=@alert_summary%>&nbsp; 
-    <a href="<%=@alert_url%>" class="alert-link">details</a>
+    <div class="alert alert-danger" role="alert">
+      <strong><%=alert.title%></strong>
+      <div><%=alert.summary%>&nbsp; 
+      <a href="<%=alert.link%>" class="alert-link">details</a>
+    </div>
+    </div>
   </div>
-  </div>
-</div>
-
 <% end %>
+
 <section class="chart">
   <div class="container">
     <div class="row">

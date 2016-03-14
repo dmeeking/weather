@@ -3,7 +3,7 @@ namespace :forecast do
   task :scrape => :environment do
   	WeatherReading.gather_web_weather
 	HourlyForecast.gather_web_forecast
-
+	WeatherAlert.gather_alerts
   end
 
 end
