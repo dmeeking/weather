@@ -13,8 +13,11 @@ function showNotification(title, body, icon, data) {
   return self.registration.showNotification(title, notificationOptions);
 }
 
+//token that ties user to alerts on the backend
+self.token = ''
+
 self.addEventListener('push', function(event) {
-  console.log('Received a push message', event);
+ // console.log('Received a push message', event);
 
   // Since this is no payload data with the first version
   // of Push notifications, here we'll grab some data from
@@ -32,25 +35,30 @@ self.addEventListener('push', function(event) {
         return response.json();
       })
       .then(function(data) {
-        console.log('Weather API data: ', data);
-        if (data.query.count === 0) {
+       
+      // 	console.log(data)
+        if (data.alerts.length === 0) {
           // Throw an error so the promise is rejected and catch() is executed
           throw new Error();
         }
+        //Todo: what if there are multiple alerts?
+        // hints at https://developers.google.com/web/updates/2015/05/notifying-you-of-changes-to-notifications?hl=en
+        // see the ServiceWorkerRegistration.getNotifications() section
 
-        var title = 'What\'s the weather like in London?';
-        var message = "m"
+        var alert = data.alerts[0];
+        var title = alert.title;
+        var message = alert.message;
         var icon = 'images/touch/chrome-touch-icon-192x192.png';
 
         // Add this to the data of the notification
         var urlToOpen = "/";
 
         var notificationFilter = {
-          tag: 'simple-push-demo-notification'
+          tag: alert.channel
         };
 
         var notificationData = {
-          url: urlToOpen
+          url: alert.link != null? alert.link : '/'
         };
 
         if (!self.registration.getNotifications) {
@@ -76,7 +84,7 @@ self.addEventListener('push', function(event) {
                 existingNotification.close();
               }
               message = 'You have ' + notificationCount +
-                ' weather updates.';
+                'updates pending.';
               notificationData.notificationCount = notificationCount;
             }
 
@@ -84,8 +92,8 @@ self.addEventListener('push', function(event) {
           });
       })
       .catch(function(err) {
+      
         console.error('A Problem occured with handling the push msg', err);
-
         var title = 'An error occured';
         var message = 'We were unable to get the information for this ' +
           'push message';

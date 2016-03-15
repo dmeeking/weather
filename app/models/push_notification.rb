@@ -1,15 +1,20 @@
 class PushNotification < ActiveRecord::Base
 
 
-	def self.create_send(channel, notification_message)
+	def self.create_send(channel, title, message)
 		subscriptions = PushSubscription.where(channel_name: channel)
 
 		subscription_ids = []
 		subscriptions.each do |subscription|
 			subscription_ids.push(subscription.subscription_id)
 			
-			notification = PushNotification.create(subscription_id: subscription.subscription_id, read: false, message: @message, channel: subscription.channel_name)
-			notification.save
+			notification = PushNotification.create(subscription_id: subscription.subscription_id, 
+				read: false, 
+				title: title,
+				message: message, 
+				channel: subscription.channel_name, 
+				user_token: subscription.user_token)
+			
    		end
 
 

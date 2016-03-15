@@ -51,7 +51,7 @@ class HomeController < ApplicationController
     remove_subscriptions(user_token, channel)
 
     subscription = PushSubscription.create(user_token: user_token, channel_name: channel, subscription_id: subscription_id)
-    subscription.save
+   
 
     render json: {success:true}
 
