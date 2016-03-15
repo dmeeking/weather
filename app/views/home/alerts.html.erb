@@ -2,35 +2,11 @@
 
 
 
+<div class="checkbox">
+  <label>
+    <input type="checkbox" value="1" id="switch-alerts" />
+    Enable push notificaions for admin_all
+  </label>
+</div>
+
   <script type="text/javascript" src="<%=asset_url('push-main.js')%>"></script>
-
-      <div class="push-switch-container js-push-switch-container">
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect js-push-toggle-switch" for="switch-2">
-          <input type="checkbox" id="switch-2" class="mdl-switch__input" disabled>
-          <span class="mdl-switch__label">Enable Push Notifications</span>
-        </label>
-      </div>
-
-      <div class="content-overlap-wrapper">
-        <div class="send-push-options js-send-push-options">
-          <p class="center">
-            <button class="xhr-button js-send-push-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-              Send a Push to GCM via XHR
-            </button>
-          </p>
-
-          <p class="center">OR</p>
-
-          <p>Copy and paste the following CURL command into your terminal
-          to send a push message to your browser.</p>
-
-          <code class="curl-code-example js-curl-code"></code>
-        </div>
-        <div class="error-message-container js-error-message-container">
-          <h1 class="error-title js-error-title"></h1>
-          <p class="error-message js-error-message"></p>
-        </div>
-      </div>
-
-
-    </main>

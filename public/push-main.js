@@ -1,3 +1,184 @@
+/*!
+ * Copyright 2016 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
+ */
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+/**
+ *
+ *  Web Starter Kit
+ *  Copyright 2014 Google Inc. All rights reserved.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *    https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License
+ *
+ */
+
+var _pushClientEs = require('./push-client.es6.js');
+
+var _pushClientEs2 = _interopRequireDefault(_pushClientEs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var API_KEY = 'AIzaSyBBh4ddPa96rQQNxqiq_qQj7sq1JdsNQUQ';
+
+// Define a different server URL here if desire.
+var PUSH_SERVER_URL = '';
+
+function updateUIForPush(pushToggleSwitch) {
+  // This div contains the UI for CURL commands to trigger a push
+  var sendPushOptions = document.querySelector('.js-send-push-options');
+
+  var stateChangeListener = function stateChangeListener(state, data) {
+    // console.log(state);
+    if (typeof state.interactive !== 'undefined') {
+      if (state.interactive) {
+        pushToggleSwitch.disabled = false;
+      } else {
+        pushToggleSwitch.disabled = true;
+      }
+    }
+
+    if (typeof state.pushEnabled !== 'undefined') {
+      if (state.pushEnabled) {
+        pushToggleSwitch.checked = true;
+      } else {
+        pushToggleSwitch.checked = false;
+      }
+    }
+
+    switch (state.id) {
+      case 'ERROR':
+        console.error(data);
+        alert('Ooops a Problem Occurred', data);
+        break;
+      default:
+        break;
+    }
+  };
+
+  var subscriptionUpdate = function subscriptionUpdate(subscription) {
+    //console.log('subscriptionUpdate: ', subscription);
+  
+    if (!subscription) {
+      
+      fetch(PUSH_SERVER_URL + '/unsubscribe/'+self.token+'/admin_all', {
+        method: 'get',
+        });
+
+      return;
+    }
+
+
+
+    // We should figure the GCM curl command
+    var produceGCMProprietaryCURLCommand = function produceGCMProprietaryCURLCommand() {
+    var curlEndpoint = 'https://android.googleapis.com/gcm/send';
+    var endpointSections = subscription.endpoint.split('/');
+    var subscriptionId = endpointSections[endpointSections.length - 1];
+      
+
+
+    fetch(PUSH_SERVER_URL + '/subscribe/'+self.token+'/admin_all/'+subscriptionId, {
+      method: 'get',
+      }).then(function(response) {
+      //console.log(response);
+    });
+
+
+
+
+      var curlCommand = 'curl --header "Authorization: key=' + API_KEY + '" --header Content-Type:"application/json" ' + curlEndpoint + ' -d "{\\"registration_ids\\":[\\"' + subscriptionId + '\\"], \\"data\\":{ \\"fred\\":\\"test\\"}  }"';
+      return curlCommand;
+    };
+
+    var produceWebPushProtocolCURLCommand = function produceWebPushProtocolCURLCommand() {
+      var curlEndpoint = subscription.endpoint;
+      var curlCommand = 'curl --request POST ' + curlEndpoint;
+      return curlCommand;
+    };
+
+    var curlCommand;
+    if (subscription.endpoint.indexOf('https://android.googleapis.com/gcm/send') === 0) {
+      curlCommand = produceGCMProprietaryCURLCommand();
+    } else {
+      curlCommand = produceWebPushProtocolCURLCommand();
+    }
+
+
+  };
+
+  var pushClient = new _pushClientEs2.default(stateChangeListener, subscriptionUpdate);
+
+  document.querySelector('#switch-alerts').addEventListener('click', function (event) {
+    // Inverted because clicking will change the checked state by
+    // the time we get here
+    if (!event.target.checked) {
+      pushClient.unsubscribeDevice();
+    } else {
+      pushClient.subscribeDevice();
+    }
+  });
+
+
+  //ensure we have a unique userID in local storage
+  var userToken = 0;
+  self.token = userToken;
+  if(typeof(Storage) !== "undefined") {
+    userToken = localStorage.getItem("token");
+    if(null == userToken)
+    {
+        userToken = (Math.random().toString(36)+'00000000000000000').slice(2, 10+2);
+        localStorage.setItem("token", userToken);
+    }
+    self.token = userToken;
+  } 
+
+  // Check that service workers are supported
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js', {
+      scope: './'
+    }).then(function(reg) {
+      var messenger = reg.installing || navigator.serviceWorker.controller;
+      messenger.postMessage({token: userToken});
+    }).catch(function(err) {
+      console.log('err');
+      console.log(err);
+    });
+  } else {
+   // showErrorMessage('Service Worker Not Supported', 'Sorry this demo requires service worker support in your browser. ' + 'Please try this demo in Chrome or Firefox Nightly.');
+  }
+
+
+}
+
+var toggleSwitch = document.querySelector('#switch-alerts');
+toggleSwitch.initialised = false;
+
+updateUIForPush(toggleSwitch);
+
+},{"./push-client.es6.js":2}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -156,7 +337,7 @@ var PushClient = function () {
     value: function subscribeDevice() {
       var _this3 = this;
 
-      console.log('PushClient.subscribeDevice()');
+   //   console.log('PushClient.subscribeDevice()');
 
       this._stateChangeCb(this.state.STARTING_SUBSCRIBE);
 
@@ -187,7 +368,7 @@ var PushClient = function () {
     value: function unsubscribeDevice() {
       var _this4 = this;
 
-      console.log('PushClient.unsubscribeDevice()');
+    //  console.log('PushClient.unsubscribeDevice()');
       // Disable the switch so it can't be changed while
       // we process permissions
       // window.PushDemo.ui.setPushSwitchDisabled(true);
@@ -229,3 +410,5 @@ var PushClient = function () {
 }();
 
 exports.default = PushClient;
+
+},{}]},{},[1]);

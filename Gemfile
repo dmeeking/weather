@@ -32,7 +32,7 @@ gem 'active_link_to'
 gem 'groupdate'
 gem 'nokogiri'
 gem 'bootstrap-sass', '~> 3.3.6'
-
+gem 'gcm'
 #gem 'pushpad'
 
 # Use ActiveModel has_secure_password

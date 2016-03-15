@@ -1,9 +1,12 @@
 namespace :forecast do
   desc "Scrape recent conditions from environment canada for YOW"
   task :scrape => :environment do
-  	WeatherReading.gather_web_weather
-	HourlyForecast.gather_web_forecast
-	WeatherAlert.gather_alerts
+  	#WeatherReading.gather_web_weather
+	#HourlyForecast.gather_web_forecast
+	#WeatherAlert.gather_alerts
+	
+	PushNotification.create_send('admin_all', "Scraping succeeded at #{Time.now}")
+
   end
 
 end

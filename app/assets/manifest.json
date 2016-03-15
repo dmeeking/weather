@@ -2,5 +2,6 @@
   "name": "YOWX",
   "short_name": "YOWX",
   "start_url": "/",
+  "display": "standalone",
   "gcm_sender_id": "369601279499"
 }

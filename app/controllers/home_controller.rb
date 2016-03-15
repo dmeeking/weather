@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  protect_from_forgery except: :subscribe
   def index
     @alerts = WeatherAlert.where(active: true)
   end
@@ -33,6 +34,43 @@ class HomeController < ApplicationController
     magic_map
   end
 
+  def alertinfo
+      user_token =  params['token']
+      alerts = PushNotification.where(user_token: user_token, read: false)
+      render json: {
+        alerts: alerts
+      }
+      alerts.update_all(read: true)
+  end
 
+  def subscribe
+    user_token =  params[:token]
+    channel = params[:channel]
+    subscription_id = params[:sid]
+    
+    remove_subscriptions(user_token, channel)
 
+    subscription = PushSubscription.create(user_token: user_token, channel_name: channel, subscription_id: subscription_id)
+    subscription.save
+
+    render json: {success:true}
+
+  end
+
+  def remove_subscriptions(user_token, channel)
+
+    subscription = PushSubscription.where(user_token: user_token, channel_name: channel).destroy_all
+ 
+  end
+
+  def unsubscribe
+
+    user_token =  params[:token]
+    channel = params[:channel]
+
+    remove_subscriptions(user_token, channel)
+
+    render json: {success:true}
+
+  end
 end

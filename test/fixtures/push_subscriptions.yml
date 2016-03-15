@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_token: MyString
+  channel_name: MyString
+  subscription_id: MyString
+
+two:
+  user_token: MyString
+  channel_name: MyString
+  subscription_id: MyString
