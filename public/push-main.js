@@ -125,14 +125,14 @@ function updateUIForPush(pushToggleSwitch) {
 
   // Check that service workers are supported
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js?123', {
+    navigator.serviceWorker.register('/service-worker.js', {
       scope: './'
     }).then(function(reg) {
-      console.log('installing / posting', userToken);
+    //  console.log('installing / posting', userToken);
       var messenger = reg.installing || navigator.serviceWorker.controller;
       messenger.postMessage({token: userToken});
     }).catch(function(err) {
-      console.log('service worker error', err);
+      console.error('service worker error', err);
     });
   } else {
    // showErrorMessage('Service Worker Not Supported', 'Sorry this demo requires service worker support in your browser. ' + 'Please try this demo in Chrome or Firefox Nightly.');

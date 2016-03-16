@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails weather: test" uuid="4f87a51c-9fc5-43ec-a7fa-3052125ce9d6">
+      <user-name>dan</user-name>
+    </data-source>
+    <data-source name="Rails weather: development" uuid="677ff2b2-479b-4529-b32c-e0b41dcde41e">
+      <first-sync>true</first-sync>
+      <user-name>dan</user-name>
+    </data-source>
+  </component>
+</project>
