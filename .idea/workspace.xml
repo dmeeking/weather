@@ -93,7 +93,7 @@
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/push-main.js.erb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.36792454">
-              <caret line="127" column="93" selection-start-line="127" selection-start-column="93" selection-end-line="127" selection-end-column="93" />
+              <caret line="127" column="91" selection-start-line="127" selection-start-column="91" selection-end-line="127" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -930,7 +930,7 @@
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/push-main.js.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36792454">
-          <caret line="127" column="93" selection-start-line="127" selection-start-column="93" selection-end-line="127" selection-end-column="93" />
+          <caret line="127" column="91" selection-start-line="127" selection-start-column="91" selection-end-line="127" selection-end-column="91" />
           <folding />
         </state>
       </provider>
