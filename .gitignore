@@ -30,6 +30,7 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
+.idea
 
 config/application.yml
 
