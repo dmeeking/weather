@@ -98,8 +98,9 @@ function showNotification(title, body, icon, data) {
 
 
 self.addEventListener('push', function(event) {
-;
-  getToken(function(){
+  event.waitUntil(
+
+    getToken(function(){
 
     // Since this is no payload data with the first version
     // of Push notifications, here we'll grab some data from
@@ -187,10 +188,9 @@ self.addEventListener('push', function(event) {
 
 
 
-  });
+  })
 
-
-
+  );
 });
 
 self.addEventListener('notificationclick', function(event) {
