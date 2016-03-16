@@ -126,7 +126,7 @@ function updateUIForPush(pushToggleSwitch) {
   // Check that service workers are supported
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('<%= asset_path 'service-worker.js'  %>?v=2016-03-16', {
-      scope: './assets'
+      scope: '/'
     }).then(function(reg) {
     //  console.log('installing / posting', userToken);
       var messenger = reg.installing || navigator.serviceWorker.controller;
