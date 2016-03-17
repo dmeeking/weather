@@ -13,7 +13,7 @@ class WeatherAlert < ActiveRecord::Base
 		doc.css("entry").each do |item|
 
 				alert_summary =item.css('summary').text
-				if alert_summary != 'xxxNo watches or warnings in effect.'
+				if alert_summary != 'No watches or warnings in effect.'
 					alert_url = item.css('link')[0]['href']
 					alert_title = item.css('title').text
 					alert_published_at = DateTime.parse(item.css('published').text)

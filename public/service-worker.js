@@ -106,9 +106,6 @@ self.addEventListener('push', function(event) {
           return response.json();
         })
         .then(function(data) {
-  return response.json();
-        })
-        .then(function(data) {
 
           // 	console.log(data)
           if (data.alerts.length === 0) {
@@ -122,7 +119,7 @@ self.addEventListener('push', function(event) {
           var alert = data.alerts[0];
           var title = alert.title;
           var message = alert.message;
-          var icon = 'images/touch/chrome-touch-icon-192x192.png';
+          var icon = '/icon-sun.png';
 
           // Add this to the data of the notification
           var urlToOpen = "/";
@@ -132,7 +129,7 @@ self.addEventListener('push', function(event) {
           };
 
           var notificationOptions = {
-            body: body,
+            body: message,
             icon: icon ,
             tag: alert.channel,
             data: notificationData
@@ -147,7 +144,7 @@ self.addEventListener('push', function(event) {
           var message = 'We were unable to get the information for this ' +
               'push message';
 
-          return showNotification(title, message);
+          return self.registration.showNotification(title, {body:message});
         });
   })
 

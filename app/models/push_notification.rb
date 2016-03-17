@@ -18,7 +18,6 @@ class PushNotification < ActiveRecord::Base
 			
    		end
 
-
    		
    		if subscription_ids.length > 0
 
