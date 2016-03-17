@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               var value = parseFloat(this.value);
               
               var label = '';
-              if(value == 0 || (value % 22.5 == 0)) {
+              if(value == 0 || (value % 45 == 0)) {
                 $.each(jsonData.windDirections, function(k, v) {
                     if (v == value) {
                       label = k;

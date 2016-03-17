@@ -17,17 +17,12 @@ class PushNotification < ActiveRecord::Base
 				user_token: subscription.user_token)
 			
    		end
-
-   		
    		if subscription_ids.length > 0
-
-			require 'gcm'
-			gcm = GCM.new(Rails.application.secrets.google_push_api_key)
-
-			options = {}
-			response = gcm.send(subscription_ids, options)
-
-		end
+				require 'gcm'
+				gcm = GCM.new(Rails.application.secrets.google_push_api_key)
+				options = {}
+				response = gcm.send(subscription_ids, options)
+			end
 
 	end
 end
