@@ -15,4 +15,6 @@
 
 //= require highcharts/highcharts
 //= require highcharts/grid-light
+//= require bootstrap/button
+
 

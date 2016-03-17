@@ -10,6 +10,7 @@ class WeatherReading < ActiveRecord::Base
 
 # called by a rake task that is scheduled to run every hour
   def self.gather_web_weather
+      weather_count = 0
       require 'open-uri'
       url = "https://weather.gc.ca/past_conditions/index_e.html?station=yow"
       doc = Nokogiri::HTML(open(url))
@@ -33,6 +34,9 @@ class WeatherReading < ActiveRecord::Base
 
 
           reading = WeatherReading.where(reading_at: historicalDateTime.utc).first_or_initialize
+          if reading.new_record?
+            weather_count = weather_count + 1
+          end
           reading.location = 'YOW'
           reading.temperature = temperature
           reading.wind_speed = wind_speed
@@ -46,6 +50,7 @@ class WeatherReading < ActiveRecord::Base
 
       end
 
+      weather_count
   end
 
 end

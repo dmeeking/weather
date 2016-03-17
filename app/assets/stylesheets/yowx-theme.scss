@@ -145,3 +145,16 @@ footer {
     color:#fff;
     border-bottom:dotted 1px #fff ;
 }
+
+
+#alerts{
+  button.active:before,
+  label.btn-info.active:before{
+    content: "\2713";
+    display: inline-block;
+  }
+  .btn-info.active{
+    background-color: $brand-success;
+    border-color: $brand-success;;
+  }
+}

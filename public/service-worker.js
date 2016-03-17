@@ -85,18 +85,6 @@ function setToken(token) {
 }
 
 
-function showNotification(title, body, icon, data) {
- // console.log('showNotification');
-  var notificationOptions = {
-    body: body,
-    icon: icon ? icon : '/images/touch/chrome-touch-icon-192x192.png',
-    tag: 'yowx-alert',
-    data: data
-  };
-  return self.registration.showNotification(title, notificationOptions);
-}
-
-
 self.addEventListener('push', function(event) {
   event.waitUntil(
 
@@ -118,6 +106,9 @@ self.addEventListener('push', function(event) {
           return response.json();
         })
         .then(function(data) {
+  return response.json();
+        })
+        .then(function(data) {
 
           // 	console.log(data)
           if (data.alerts.length === 0) {
@@ -136,43 +127,18 @@ self.addEventListener('push', function(event) {
           // Add this to the data of the notification
           var urlToOpen = "/";
 
-          var notificationFilter = {
-            tag: alert.channel
-          };
-
           var notificationData = {
             url: alert.link != null? alert.link : '/'
           };
 
-          if (!self.registration.getNotifications) {
-            return showNotification(title, message, icon, notificationData);
-          }
+          var notificationOptions = {
+            body: body,
+            icon: icon ,
+            tag: alert.channel,
+            data: notificationData
+          };
+          return self.registration.showNotification(title, notificationOptions);
 
-          // Check if a notification is already displayed
-          return self.registration.getNotifications(notificationFilter)
-              .then(function(notifications) {
-                if (notifications && notifications.length > 0) {
-                  // Start with one to account for the new notification
-                  // we are adding
-                  var notificationCount = 1;
-                  for (var i = 0; i < notifications.length; i++) {
-                    var existingNotification = notifications[i];
-                    if (existingNotification.data &&
-                        existingNotification.data.notificationCount) {
-                      notificationCount +=
-                          existingNotification.data.notificationCount;
-                    } else {
-                      notificationCount++;
-                    }
-                    existingNotification.close();
-                  }
-                  message = 'You have ' + notificationCount +
-                      'updates pending.';
-                  notificationData.notificationCount = notificationCount;
-                }
-
-                return showNotification(title, message, icon, notificationData);
-              });
         })
         .catch(function(err) {
 
@@ -183,11 +149,6 @@ self.addEventListener('push', function(event) {
 
           return showNotification(title, message);
         });
-
-
-
-
-
   })
 
   );

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
  get 'alert-info/:token' => 'home#alertinfo'
  get 'subscribe/:token/:channel/:sid' => 'home#subscribe'
  get 'unsubscribe/:token/:channel' => 'home#unsubscribe'
-
+ get 'list/:token' => 'home#list_subscriptions'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

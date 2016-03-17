@@ -1,7 +1,8 @@
 class PushNotification < ActiveRecord::Base
-
+	ALERT_TYPES = [ADMIN_ALL = 'admin_all', ADMIN_ERRORS = 'admin_errors', WEATHER_ALERTS = "weather_alerts", FORECAST_SURPRISES = "forecast_surprises"]
 
 	def self.create_send(channel, title, message)
+
 		subscriptions = PushSubscription.where(channel_name: channel)
 
 		subscription_ids = []

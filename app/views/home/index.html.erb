@@ -1,6 +1,6 @@
 <% @alerts.each do |alert| %>
   <div class="container">
-    <div class="alert <%=alert.category == 'Alerts' ? 'alert-info' : 'alert-warning'%>" role="alert">
+    <div class="alert alert-<%=alert.category%>" role="alert">
       <strong><%=alert.title%></strong>
       <div><%=alert.summary%>&nbsp; 
       <a href="<%=alert.link%>" class="alert-link">details</a>

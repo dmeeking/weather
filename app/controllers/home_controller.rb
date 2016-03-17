@@ -57,9 +57,26 @@ class HomeController < ApplicationController
 
   end
 
+
+  def list_subscriptions
+    user_token =  params[:token]
+
+    subscriptions = PushSubscription.where(user_token: user_token)
+
+    render json: {subscriptions:subscriptions}
+
+  end
+
   def remove_subscriptions(user_token, channel)
 
-    subscription = PushSubscription.where(user_token: user_token, channel_name: channel).destroy_all
+
+    subscriptions = PushSubscription.where(user_token: user_token)
+
+    if channel != 'all'
+      subscriptions = subscriptions.where(channel_name: channel)
+    end
+
+    subscriptions.destroy_all
  
   end
 
