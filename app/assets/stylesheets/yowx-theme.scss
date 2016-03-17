@@ -68,6 +68,13 @@ header {
     .navbar-nav li a:focus {
         outline: 0;
     }
+    .navbar-brand {
+      padding-top:8px;
+      img {
+        height:60px;
+        -webkit-filter: brightness(0) invert(1);
+      }
+    }
 }
 
 
