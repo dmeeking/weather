@@ -2,7 +2,7 @@ namespace :forecast do
   desc "Scrape recent conditions from environment canada for YOW"
   task :scrape => :environment do
 
-		now = Time.now.strftime('%A @ %r')
+		now = Time.now.in_time_zone.strftime('%A @ %r')
 		begin
       readings = WeatherReading.gather_web_weather
 			forecasts = HourlyForecast.gather_web_forecast
