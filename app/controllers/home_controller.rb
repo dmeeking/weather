@@ -9,8 +9,14 @@ class HomeController < ApplicationController
   	chartRange = 0.days.ago.midnight..-24.hours.ago
   	dateFormat = '%a, %d %b %Y %H:%M:%S %z';
 
-    allReadings = WeatherReading.where(reading_at: chartRange).order(reading_at: :asc).select(:reading_at, :temperature, :pressure, :wind_speed, :wind_direction).to_a
+    allReadings = WeatherReading.where(location: 'YOW', reading_at: chartRange).order(reading_at: :asc).select(:reading_at, :temperature, :pressure, :wind_speed, :wind_direction).to_a
     allReadings = allReadings.group_by_hour(format:dateFormat, default_value:nil) {|r| r.reading_at}
+
+
+    localReadings = WeatherReading.where(location: 'WBO', reading_at: chartRange).order(reading_at: :asc).select(:reading_at, :temperature, :pressure, :wind_speed, :wind_direction).to_a
+    localReadings = localReadings.group_by_minute(format:dateFormat, default_value:nil) {|r| r.reading_at}
+    # rip out empties
+    localReadings = localReadings.delete_if { |k, v| v.length == 0 }
 
     forecastRange = WeatherReading.order(reading_at: :desc).limit(1).first.reading_at..-24.hours.ago
     allForecasts = HourlyForecast.where(reading_at: forecastRange).order(reading_at: :asc).select(:reading_at, :temperature, :wind_speed).to_a
@@ -18,6 +24,7 @@ class HomeController < ApplicationController
 
     render json: {
         observed: allReadings,
+        local: localReadings,
         forecast: allForecasts,
         windDirections: wind_direction_map
       }

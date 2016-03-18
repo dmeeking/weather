@@ -56,28 +56,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
   });
    $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
 
-    var yowData = new Array(), windSpeedData = new Array(), windDirectionData = new Array(), pressureReadings = new Array();
-    $.each( jsonData.observed, function( key, val ) {
-    
-      var readingDate = Date.parse(key);
-      var reading = val[0];
+      var yowData = new Array(), windSpeedData = new Array(), windDirectionData = new Array(), pressureReadings = new Array();
+      var wboData = new Array(), wboWindSpeedData = new Array(), wboWindDirectionData = new Array(), wboPressureReadings = new Array();
 
-      var temperature = (null == reading) ? null : parseInt(reading.temperature);
-      var speed = (null == reading) ? null : parseInt(reading.wind_speed);
-      var directionName = (null == reading) ? null : reading.wind_direction;
-      var direction = translateDirection(directionName);
-      var pressure = (null == reading) ? null : parseFloat(reading.pressure);
-     
-      yowData.push([readingDate, temperature]);
-      windSpeedData.push([readingDate, speed]);
-      windDirectionData.push({
-        x: readingDate, 
-        y: direction,
-        name: directionName});
-      pressureReadings.push([readingDate, pressure]);
 
-    });
+     loadWeatherArray(jsonData.observed, yowData, pressureReadings, windSpeedData, windDirectionData);
+     loadWeatherArray(jsonData.local, wboData, wboPressureReadings, wboWindSpeedData, wboWindDirectionData);
 
+      function loadWeatherArray(json, tempReadings, pressureReadings, windSpeedData, windDirectionData) {
+        var readings = Array();
+
+        $.each(json, function (key, val) {
+
+          var readingDate = Date.parse(key);
+          var reading = val[0];
+
+          var temperature = (null == reading) ? null : parseInt(reading.temperature);
+          var speed = (null == reading) ? null : parseInt(reading.wind_speed);
+          var directionName = (null == reading) ? null : reading.wind_direction;
+          var direction = translateDirection(directionName);
+          var pressure = (null == reading) ? null : parseFloat(reading.pressure);
+
+          windSpeedData.push([readingDate, speed]);
+          windDirectionData.push({
+            x: readingDate,
+            y: direction,
+            name: directionName
+          });
+          pressureReadings.push([readingDate, pressure]);
+
+          tempReadings.push([readingDate, temperature]);
+        });
+
+
+      }
     function translateDirection(textDir){
       
       if(null == textDir) return null;
@@ -120,6 +132,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
             line: {
                 animation: false,
                 lineWidth: 2
+            },
+            scatter: {
+              animation: false
             }
         },
          xAxis: {
@@ -188,7 +203,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             minorTickInterval: 1,
             minorGridLineWidth: 1,
             minorTickLength:0,
-
             title: {
                 text: '°C',
                 style:{
@@ -216,25 +230,38 @@ document.addEventListener("DOMContentLoaded", function(event) {
               }}
         }],
         series: [{
-            name: 'Observed',
+            name: 'Observed @ YOW',
             color:'#C00',
             data: yowData,
+            type: 'scatter',
             marker: {
-              enabled: false
-            }, 
+              radius: 4
+            },
             states: {
               hover: {
                   enabled: false
               }
             }},
             {
+            name: 'Observed @ Home',
+            color:'#000',
+            data: wboData,
+            marker: {
+              enabled: false
+            },
+            states: {
+              hover: {
+                enabled: false
+              }
+            }},
+            {
             name: 'Forecast',
-            dashStyle: 'ShortDash',
+            dashStyle: 'Dot',
             color:'#C00',
             data: hourlyForecast,
             marker: {
               enabled: false
-            }, 
+            },
             states: {
               hover: {
                   enabled: false
@@ -290,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
               return label;
             },
             style: {
-              fontSize: defaultFontSize,
+              fontSize: defaultFontSize
 
             }
           }
