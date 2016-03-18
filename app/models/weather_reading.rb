@@ -33,7 +33,7 @@ class WeatherReading < ActiveRecord::Base
          # puts "#{historicalDateTime} -#{wind_dir} - #{wind_speed} - #{pressure}"
 
 
-          reading = WeatherReading.where(reading_at: historicalDateTime.utc).first_or_initialize
+          reading = WeatherReading.where(location: 'YOW', reading_at: historicalDateTime.utc).first_or_initialize
           if reading.new_record?
             weather_count = weather_count + 1
           end
@@ -51,6 +51,47 @@ class WeatherReading < ActiveRecord::Base
       end
 
       weather_count
+  end
+
+
+# called by a rake task that is scheduled to run 5 minutes or so hour
+  def self.gather_local_weather
+    weather_count = 0
+    require 'open-uri'
+    api_key = Rails.application.secrets.wunderground_key
+
+    url = "http://api.wunderground.com/api/#{api_key}/conditions/q/pws:IONOTTAW40.json"
+    conditions = JSON.parse(open(url).read)
+    if conditions.nil?
+      return 0
+    end
+
+    observation = conditions['current_observation']
+    temperature = observation['temp_c']
+    wind_dir = nil
+    wind_speed = nil
+    humidity = observation['relative_humidity']
+    dew_point = observation['dewpoint_c']
+    pressure = observation['pressure_mb'].to_i / 10.0
+    historicalDateTime = DateTime.parse(observation['observation_time_rfc822'])
+    # puts "#{historicalDateTime} -#{wind_dir} - #{wind_speed} - #{pressure}"
+
+
+    reading = WeatherReading.where(location: 'WBO', reading_at: historicalDateTime.utc).first_or_initialize
+    if reading.new_record?
+      weather_count = weather_count + 1
+    end
+    reading.location = 'WBO'
+    reading.temperature = temperature
+    reading.wind_speed = wind_speed
+    reading.wind_direction = wind_dir
+    reading.pressure = pressure
+    reading.dew_point = dew_point
+    reading.relative_humidity = humidity
+    reading.save! #throw an exception if there are validation errors
+
+
+    weather_count
   end
 
 end

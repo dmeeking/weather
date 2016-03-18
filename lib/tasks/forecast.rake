@@ -13,4 +13,17 @@ namespace :forecast do
 		end
   end
 
+	desc "Scrape recent condition from Wunderground"
+	task :local => :environment do
+
+		now = Time.now.in_time_zone.strftime('%A @ %r')
+		begin
+
+			local_readings = WeatherReading.gather_local_weather
+			PushNotification.create_send(PushNotification::ADMIN_ERRORS, "Local Conditions Updated Successfully", "Scraped at #{now}. #{local_readings} readings")
+		rescue Exception => e
+			PushNotification.create_send(PushNotification::ADMIN_ALL, "Locao conditions update error", "Local weather gathering error: #{e.message} at #{now}" )
+		end
+	end
+
 end
