@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           var readingDate = Date.parse(key);
           var reading = val[0];
 
-          var temperature = (null == reading) ? null : parseInt(reading.temperature);
+          var temperature = (null == reading) ? null : parseFloat(reading.temperature);
           var speed = (null == reading) ? null : parseInt(reading.wind_speed);
           var directionName = (null == reading) ? null : reading.wind_direction;
           var direction = translateDirection(directionName);
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         },
          xAxis: {
           minorTickWidth: 1,
-          minorTickInterval: 1000*60*5,
+          minorTickInterval: 1000*60*60,
           minorGridLineWidth: 1,
           minorTickLength:0,
           tickColor: '#DDD',
@@ -210,14 +210,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
                   textTransform: 'none'
                 }
             },
-            allowDecimals: false,
+            allowDecimals: true,
             labels:{
               style: {
                 fontSize: defaultFontSize
               }}
 
-          }, { 
-           
+          }, {
+          minorGridLineWidth:0,
+          gridLineWidth:0,
             linkedTo: 0,
             opposite: true,
             title: {
