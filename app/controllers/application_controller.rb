@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 	
   helper_method :current_conditions
   def current_conditions
-  	WeatherReading.order(reading_at: :desc).limit(1).pluck(:temperature, :wind_speed, :wind_direction).first
+  	WeatherReading.order(reading_at: :desc).pluck(:temperature, :wind_speed, :wind_direction).first
   end
 
 
