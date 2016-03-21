@@ -10,5 +10,5 @@ module Clockwork
 
   every(4.minutes, 'LocalWeatherJob')
   every(1.hour, 'YowWeatherJob', :at => '**:20')
- 
+
 end

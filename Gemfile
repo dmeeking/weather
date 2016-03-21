@@ -33,7 +33,6 @@ gem 'groupdate'
 gem 'nokogiri'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'gcm'
-gem 'clockwork'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -48,9 +48,6 @@ GEM
       sass (>= 3.3.4)
     builder (3.2.2)
     byebug (8.2.2)
-    clockwork (1.2.0)
-      activesupport
-      tzinfo
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -174,7 +171,6 @@ DEPENDENCIES
   active_link_to
   bootstrap-sass (~> 3.3.6)
   byebug
-  clockwork
   coffee-rails (~> 4.1.0)
   figaro
   gcm
