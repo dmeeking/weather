@@ -7,6 +7,9 @@ class WeatherReading < ActiveRecord::Base
       	self.pressure  ||= 0.0           #will set the default value only if it's nil
 		    self.wind_speed  ||= 0.0           #will set the default value only if it's nil
     end
+  # ineterval is reading_at rounded to nearest 5 minutes. Use to group data on the charts to 5 minutes?
+ # default_scope {select("*, round(date_part('epoch', reading_at)/(60*5))*(60*5) as interval")}
+
 
 # called by a rake task that is scheduled to run every hour
   def self.gather_web_weather
@@ -15,6 +18,8 @@ class WeatherReading < ActiveRecord::Base
       url = "https://weather.gc.ca/past_conditions/index_e.html?station=yow"
       doc = Nokogiri::HTML(open(url))
       currentDate = Date.today
+      timeOffset = Time.zone.now.formatted_offset
+
       doc.css("tbody tr").each do |item|
         if date = item.at_css('th')
           currentDate = date.text;
@@ -29,8 +34,8 @@ class WeatherReading < ActiveRecord::Base
           humidity = item.at_css('td[headers="header7"]').text
           dew_point = item.at_css('td[headers="header8"]').text
           pressure = item.at_css('td[headers="header9m"]').text
-          historicalDateTime = DateTime.parse("#{currentDate} #{time} #{Time.zone}")
-         # puts "#{historicalDateTime} -#{wind_dir} - #{wind_speed} - #{pressure}"
+          historicalDateTime = DateTime.parse("#{currentDate} #{time} #{timeOffset}")
+         # puts "#{Time.zone} #{historicalDateTime} -#{wind_dir} - #{wind_speed} - #{pressure}"
 
 
           reading = WeatherReading.where(location: 'YOW', reading_at: historicalDateTime.utc).first_or_initialize
@@ -44,7 +49,9 @@ class WeatherReading < ActiveRecord::Base
           reading.pressure = pressure
           reading.dew_point = dew_point
           reading.relative_humidity = humidity
-          reading.save! #throw an exception if there are validation errors
+        //
+
+          #reading.save! #throw an exception if there are validation errors
           
         end
 

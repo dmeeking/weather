@@ -6,8 +6,9 @@ class HomeController < ApplicationController
 
   def temperature_readings
 
-  	chartRange = 0.days.ago.midnight..-24.hours.ago
-  	dateFormat = '%a, %d %b %Y %H:%M:%S %z';
+  	# chartRange = 0.days.ago.midnight..-24.hours.ago
+    chartRange = 12.hours.ago...-24.hours.ago
+    dateFormat = '%a, %d %b %Y %H:%M:%S %z';
 
     allReadings = WeatherReading.where(location: 'YOW', reading_at: chartRange).order(reading_at: :asc).select(:reading_at, :temperature, :pressure, :wind_speed, :wind_direction).to_a
     allReadings = allReadings.group_by_hour(format:dateFormat, default_value:nil) {|r| r.reading_at}
