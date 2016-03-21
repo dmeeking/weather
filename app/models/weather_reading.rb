@@ -49,9 +49,9 @@ class WeatherReading < ActiveRecord::Base
           reading.pressure = pressure
           reading.dew_point = dew_point
           reading.relative_humidity = humidity
-        //
 
-          #reading.save! #throw an exception if there are validation errors
+
+          reading.save! #throw an exception if there are validation errors
           
         end
 
