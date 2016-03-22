@@ -22,7 +22,7 @@ namespace :forecast do
       local_readings = WeatherReading.gather_local_weather
       PushNotification.create_send(PushNotification::ADMIN_ALL, "Local Conditions Updated Successfully", "Scraped at #{now}. #{local_readings} readings")
     rescue Exception => e
-      PushNotification.create_send(PushNotification::ADMIN_ERRORS, "Locao conditions update error", "Local weather gathering error: #{e.message} at #{now}" )
+      PushNotification.create_send(PushNotification::ADMIN_ERRORS, "Local conditions update error", "Local weather gathering error: #{e.message} at #{now}" )
     end
   end
 

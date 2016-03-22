@@ -33,6 +33,7 @@ class WeatherAlert < ActiveRecord::Base
 					alert = WeatherAlert.where(alert_id: alert_id).first_or_initialize
 					if alert.new_record?
 						alert_count = alert_count + 1
+						PushNotification.create_send(PushNotification::WEATHER_ALERTS, alert_title, alert_summary)
 					end
 					alert.summary = alert_summary
 					alert.link = alert_url
@@ -44,8 +45,6 @@ class WeatherAlert < ActiveRecord::Base
 					alert.active = true
 
 					alert.save! #throw an exception if there are validation errors
-
-					PushNotification.create_send(PushNotification::WEATHER_ALERTS, alert_title, alert_summary)
 
 				end
 
