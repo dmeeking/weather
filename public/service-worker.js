@@ -121,11 +121,9 @@ self.addEventListener('push', function(event) {
           var message = alert.message;
           var icon = '/icon-sun.png';
 
-          // Add this to the data of the notification
-          var urlToOpen = "/";
 
           var notificationData = {
-            url: alert.link != null? alert.link : '/'
+            url: alert.link != null ? alert.link : '/'
           };
 
           var notificationOptions = {
@@ -153,8 +151,27 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
   var url = event.notification.data.url;
+
   event.notification.close();
-  event.waitUntil(clients.openWindow(url));
+  // This looks to see if the current is already open and
+  // focuses if it is
+  event.waitUntil(
+      clients.matchAll({
+            type: "window"
+          })
+          .then(function(clientList) {
+            for (var i = 0; i < clientList.length; i++) {
+              var client = clientList[i];
+             // just focus existing client - that's good for this app
+              if ('focus' in client)
+                return client.focus();
+            }
+            if (clients.openWindow) {
+
+              return clients.openWindow(url);
+            }
+          })
+  );
 });
 
 self.token = 'unset';

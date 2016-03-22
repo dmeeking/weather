@@ -9,6 +9,8 @@ class HourlyForecast < ActiveRecord::Base
       url = "https://weather.gc.ca/forecast/hourly/on-118_metric_e.html"
       doc = Nokogiri::HTML(open(url))
       currentDate = Date.today
+      timeOffset = Time.zone.now.formatted_offset
+
       doc.css("tbody tr").each do |item|
         if date = item.at_css('th')
           currentDate = date.text;
@@ -21,7 +23,7 @@ class HourlyForecast < ActiveRecord::Base
           wind_dir = wind[0].gsub!(/\W/,'').strip
           wind_speed = wind[1]
        
-          historicalDateTime = DateTime.parse("#{currentDate} #{time} #{Time.zone}")
+          historicalDateTime = DateTime.parse("#{currentDate} #{time} #{timeOffset}")
          # puts "#{historicalDateTime} - #{temperature} - #{wind_dir} - #{wind_speed}"
 
           forecast = HourlyForecast.where(reading_at: historicalDateTime.utc).first_or_initialize

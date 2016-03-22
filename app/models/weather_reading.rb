@@ -7,9 +7,6 @@ class WeatherReading < ActiveRecord::Base
       	self.pressure  ||= 0.0           #will set the default value only if it's nil
 		    self.wind_speed  ||= 0.0           #will set the default value only if it's nil
     end
-  # ineterval is reading_at rounded to nearest 5 minutes. Use to group data on the charts to 5 minutes?
- # default_scope {select("*, round(date_part('epoch', reading_at)/(60*5))*(60*5) as interval")}
-
 
 # called by a rake task that is scheduled to run every hour
   def self.gather_web_weather
