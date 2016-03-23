@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     # rip out empties
     localReadings = localReadings.delete_if { |k, v| v.length == 0 }
 
-    forecastRange = WeatherReading.order(reading_at: :desc).limit(1).first.reading_at..-24.hours.ago
+    forecastRange = WeatherReading.where(location: 'YOW').order(reading_at: :desc).limit(1).first.reading_at..-24.hours.ago
     allForecasts = HourlyForecast.where(reading_at: forecastRange).order(reading_at: :asc).select(:reading_at, :temperature, :wind_speed).to_a
     allForecasts = allForecasts.group_by_hour(format:dateFormat, default_value:nil) {|r| r.reading_at}
 
