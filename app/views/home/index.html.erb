@@ -51,7 +51,7 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
   Highcharts.setOptions({
     global: {
-      timezoneOffset: <%=Time.zone.utc_offset/ -60 %>
+      timezoneOffset: <%=Time.zone.now.utc_offset/ -60 %>
     }
   });
    $.getJSON('<%=url_for(action: 'temperature_readings', controller: 'home')%>', function (jsonData) {
