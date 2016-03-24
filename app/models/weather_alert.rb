@@ -20,8 +20,10 @@ class WeatherAlert < ActiveRecord::Base
 					alert_category = item.css('category')[0]['term']
 					if alert_title.ends_with? ("ENDED")
 						alert_category = 'success'
-					elsif alert_category == 'Alerts'
-						alert_category = 'info'
+					elsif alert_title.include? ("WARNING")
+						alert_category = 'danger'
+					elsif alert_title.include? ("WATCH")
+						alert_category = 'danger'
 					else
 						alert_category = 'warning'
 					end
