@@ -38,6 +38,11 @@ class HourlyForecast < ActiveRecord::Base
         end
 
       end
+
+
+      # delete older than 1mo
+      HourlyForecast.delete_all("reading_at < '#{30.days.ago}'")
+
       forecast_count
   end
 end

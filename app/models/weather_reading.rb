@@ -54,6 +54,9 @@ class WeatherReading < ActiveRecord::Base
 
       end
 
+      # delete older than 1mo
+      WeatherReading.delete_all("reading_at < '#{30.days.ago}'")
+
       weather_count
   end
 
@@ -94,6 +97,9 @@ class WeatherReading < ActiveRecord::Base
     reading.relative_humidity = humidity
     reading.save! #throw an exception if there are validation errors
 
+
+    # delete older than 1mo
+    WeatherReading.delete_all("reading_at < '#{30.days.ago}'")
 
     weather_count
   end
