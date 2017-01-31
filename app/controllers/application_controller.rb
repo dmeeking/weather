@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 	
   helper_method :current_conditions
   def current_conditions
-  	temp = WeatherReading.order(reading_at: :desc).limit(1).pluck(:temperature).first
+  	temp = WeatherReading.where("temperature IS NOT NULL").order(reading_at: :desc).limit(1).pluck(:temperature).first
     wind = WeatherReading.where("wind_direction IS NOT NULL").order(reading_at: :desc).limit(1).pluck(:wind_speed, :wind_direction).first
 
     #return simple array with conditions
