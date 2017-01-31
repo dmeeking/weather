@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var yowData = new Array(), windSpeedData = new Array(), windDirectionData = new Array(), pressureReadings = new Array();
       var wboData = new Array(), wboWindSpeedData = new Array(), wboWindDirectionData = new Array(), wboPressureReadings = new Array();
 
-
      loadWeatherArray(jsonData.observed, yowData, pressureReadings, windSpeedData, windDirectionData);
      loadWeatherArray(jsonData.local, wboData, wboPressureReadings, wboWindSpeedData, wboWindDirectionData);
 
@@ -70,8 +69,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
           var readingDate = Date.parse(key);
           var reading = val[0];
-
           var temperature = (null == reading) ? null : parseFloat(reading.temperature);
+          if(isNaN(temperature)) {
+            temperature = null;
+          }
           var speed = (null == reading) ? null : parseInt(reading.wind_speed);
           var directionName = (null == reading) ? null : reading.wind_direction;
           var direction = translateDirection(directionName);
