@@ -1,11 +1,11 @@
 class WeatherReading < ActiveRecord::Base
-	include WeatherReadingValidations
-	after_initialize :init
+    include WeatherReadingValidations
+    after_initialize :init
 
     def init
-      	self.temperature # ||= 0.0           #will set the default value only if it's nil
-      	self.pressure  ||= 0.0           #will set the default value only if it's nil
-		    self.wind_speed  ||= 0.0           #will set the default value only if it's nil
+          self.temperature # ||= 0.0           #will set the default value only if it's nil
+          self.pressure  ||= 0.0           #will set the default value only if it's nil
+            self.wind_speed  ||= 0.0           #will set the default value only if it's nil
     end
 
 # called by a rake task that is scheduled to run every hour
@@ -66,8 +66,9 @@ class WeatherReading < ActiveRecord::Base
     weather_count = 0
     require 'open-uri'
     api_key = Rails.application.secrets.wunderground_key
-
-    url = "http://api.wunderground.com/api/#{api_key}/conditions/q/pws:IONOTTAW40.json"
+    
+    # was: IONOTTAW40
+    url = "http://api.wunderground.com/api/#{api_key}/conditions/q/pws:IONWESTB2.json"
     conditions = JSON.parse(open(url).read)
     if conditions.nil?
       return 0
