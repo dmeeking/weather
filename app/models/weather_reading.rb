@@ -67,8 +67,8 @@ class WeatherReading < ActiveRecord::Base
     require 'open-uri'
     api_key = Rails.application.secrets.wunderground_key
     
-    # was: IONOTTAW40
-    url = "http://api.wunderground.com/api/#{api_key}/conditions/q/pws:IONWESTB2.json"
+    # was: IONOTTAW40, then was IONWESTB2 
+    url = "http://api.wunderground.com/api/#{api_key}/conditions/q/pws:IONTARIO1138.json"
     conditions = JSON.parse(open(url).read)
     if conditions.nil?
       return 0
