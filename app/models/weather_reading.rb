@@ -55,8 +55,9 @@ class WeatherReading < ActiveRecord::Base
       end
 
       # delete older than 1mo
-      WeatherReading.delete_all("reading_at < '#{30.days.ago}'")
+      WeatherReading.delete_all("reading_at < '#{15.days.ago}'")
 
+      
       weather_count
   end
 
@@ -100,7 +101,7 @@ class WeatherReading < ActiveRecord::Base
 
 
     # delete older than 1mo
-    WeatherReading.delete_all("reading_at < '#{30.days.ago}'")
+    WeatherReading.delete_all("reading_at < '#{15.days.ago}'")
 
     weather_count
   end
